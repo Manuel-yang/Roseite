@@ -1,6 +1,7 @@
 use super::counter::Counter;
 use crate::errors::ErrorCode;
 use crate::state::ProgramPda;
+use crate::state::NftConfigPda;
 use anchor_lang::prelude::*;
 use anchor_lang::system_program;
 use anchor_spl::associated_token;
@@ -10,12 +11,19 @@ use anchor_spl::token::Token;
 use mpl_candy_guard::cpi::accounts::MintV2;
 use mpl_candy_guard::state::CandyGuard;
 use mpl_candy_machine_core::CandyMachine;
-use mpl_token_metadata::state::Metadata;
-use mpl_token_metadata::state::TokenMetadataAccount;
 use serde_json::json;
 use solana_program::sysvar;
 
-pub fn mint<'info>(ctx: Context<MintNft>, user_address: String) -> Result<()> {
+pub fn mint<'info>(ctx: Context<MintNft>) -> Result<()> {
+    let payer_key = ctx.accounts.payer.key().clone();
+    let mint_key = ctx.accounts.nft_mint.key().clone();
+    let nft_config_pda = &mut *ctx.accounts.nft_config_pda.clone();
+
+    let nft_config_pda_bump = *ctx
+    .bumps
+    .get("nft_config_pda")
+    .ok_or(ErrorCode::StakeBumpError)?;
+
     if ctx.accounts.payer.key() != ctx.accounts.program_admin_pda.admin.key() {
         let counter_account = &mut ctx.accounts.counter_account;
         let current_count = &counter_account.count;
@@ -26,11 +34,21 @@ pub fn mint<'info>(ctx: Context<MintNft>, user_address: String) -> Result<()> {
         counter_account.count = current_count - 1;
     }
 
-    let _ = cpi_mint(ctx, user_address);
+    let _ = cpi_mint(ctx);
+
+    
+    **nft_config_pda = NftConfigPda::init(
+        mint_key, 
+        payer_key, 
+        0, 
+        0, 
+        nft_config_pda_bump);
+    let log = json!({"Func":"mint","nft_holder": nft_config_pda.nft_current_holder.to_string(),"fans_num": nft_config_pda.fans_num.to_string(), "posts_num": nft_config_pda.posts_num.to_string()});
+    msg!("{}", serde_json::to_string_pretty(&log).unwrap());
     Ok(())
 }
 
-pub fn cpi_mint<'info>(ctx: Context<MintNft>, user_address: String) -> Result<()> {
+pub fn cpi_mint<'info>(ctx: Context<MintNft>) -> Result<()> {
     system_program::create_account(
         // create account
         CpiContext::new(
@@ -100,12 +118,7 @@ pub fn cpi_mint<'info>(ctx: Context<MintNft>, user_address: String) -> Result<()
     let binding = &[&program_pda_seed[..]];
     let cpi = ctx.accounts.set_data_ctx().with_signer(binding);
 
-    mpl_candy_guard::cpi::mint_v2(cpi, vec![0], Some("SEQNA".to_string()))?;
-
-    let metadata = Box::new(Metadata::from_account_info(&ctx.accounts.nft_metadata)?);
-    let name = metadata.data.name;
-    let log = json!({"Func":"mint","userAddress": user_address, "tokenAddress": &ctx.accounts.nft_mint.key().to_string(), "name": name});
-    msg!("{}", serde_json::to_string_pretty(&log).unwrap());
+    mpl_candy_guard::cpi::mint_v2(cpi, vec![0], Some("NSM".to_string()))?;
     Ok(())
 }
 
@@ -121,6 +134,19 @@ pub struct MintNft<'info> {
         bump
     )]
     pub program_admin_pda: Account<'info, ProgramPda>,
+
+    // pda which store the info of nft
+    #[account(
+        init_if_needed,
+        payer=payer,
+        space = 128,
+        seeds = [
+            b"nft_config_pda",
+            nft_mint.key().as_ref(),
+        ],
+        bump
+    )]
+    pub nft_config_pda: Box<Account<'info, NftConfigPda>>,
 
     // mint time counter pda
     #[account(mut, constraint = counter_account.authority == payer.key() @ ErrorCode::InvalidPDA)]
