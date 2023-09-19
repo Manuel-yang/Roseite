@@ -120,16 +120,19 @@ describe("nft_social_media", () => {
   // });
 
   it("create a post", async () => {
-    let mintKeypair = new PublicKey("CaxzuutaKQmdN3CBfhwWY4td6cSRkp3gLjchhTNUF2cY")
+    let mintKeypair = new PublicKey("Fkq1LTTWrCJpXSvdeAJBDUPXNUcx8v9Tm4Po65nr4dbt")
     const nftConfigPda = await getNftConfigPda(mintKeypair)
     const postNum = await (await program.account.nftConfigPda.fetch(nftConfigPda[0])).postsNum
     const postPda = await getPostPda(mintKeypair, postNum)
+    const tokenAddress = await getAssociatedAddress(mintKeypair, adminWallet.publicKey)
     try {
       let tx = await program.methods.createPost("So, what is this for? Put it on your website as placeholder text. Print it out as a speech for your next affirmation circle and see if anyone can guess a computer wrote it. Use it to write the hottest new bestseller in the self-help section, or generate marketing copy for a new line of cheesecloth tunics or zero-point energy wands!So, what is this for? Put it on your website as placeholder text. Print it out as a speech for your next affirmation circle and see if anyone can guess a computer wrote it. Use it to write the hottest new bestseller in the self-help section, or generate marketing copy for a new line of cheesecloth tunics or zero-point energy wands!  or generate marketing copy for a new line of cheesecloth tunics or zero-point energy wands!")
       .accounts({
         payer: adminWallet.publicKey,
         nftConfigPda: nftConfigPda[0],
         postPda: postPda[0],
+        nftMint: mintKeypair,
+        nftToken: tokenAddress
       })
       .signers([adminWallet])
       .rpc()

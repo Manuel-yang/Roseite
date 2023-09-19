@@ -1,5 +1,6 @@
 use anchor_lang::prelude::*;
-
+use anchor_spl::token::{TokenAccount, Mint};
+use crate::errors::ErrorCode;
 use crate::state::{NftConfigPda, PostPda};
 
 pub fn create_post(ctx: Context<CreatePost>, content: String) -> Result<()> {
@@ -29,6 +30,22 @@ pub struct CreatePost<'info> {
         bump
     )]
     pub post_pda: Account<'info, PostPda>,
+
+    // nft mint address
+    #[account(
+        mint::decimals = 0,
+        constraint = nft_mint.supply == 1 @ ErrorCode::TokenNotNFT
+      )]
+        nft_mint: Account<'info, Mint>,
+    
+        // nft token address
+        #[account(
+        mut,
+        associated_token::mint = nft_mint,
+        associated_token::authority = payer,
+        constraint = nft_token.amount == 1 @ ErrorCode::TokenAccountEmpty
+      )]
+        nft_token: Account<'info, TokenAccount>,
 
     pub system_program: Program<'info, System>,
 }
