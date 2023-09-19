@@ -1,5 +1,5 @@
 use anchor_lang::prelude::*;
-
+use crate::errors::ErrorCode;
 #[account]
 pub struct PostPda {
     pub nft_address: Pubkey,
@@ -22,19 +22,23 @@ impl PostPda {
         }
     }
 
-    pub fn increase_review_num(&mut self) {
-        let _ = self.review_num.checked_add(1);
+    pub fn increase_review_num(&mut self) -> Result<()>{
+        let _ = self.review_num.checked_add(1).ok_or(ErrorCode::ProgramAddError)?;
+        Ok(())
     }
 
-    pub fn decrease_review_num(&mut self) {
-        let _ = self.review_num.checked_sub(1);
+    pub fn decrease_review_num(&mut self) -> Result<()>{
+        let _ = self.review_num.checked_sub(1).ok_or(ErrorCode::ProgramAddError)?;
+        Ok(())
     }
 
-    pub fn increase_like_num(&mut self) {
-        let _ = self.like_num.checked_add(1);
+    pub fn increase_like_num(&mut self) -> Result<()>{
+        let _ = self.like_num.checked_add(1).ok_or(ErrorCode::ProgramAddError)?;
+        Ok(())
     }
 
-    pub fn decrease_like_num(&mut self) {
-        let _ = self.like_num.checked_sub(1);
+    pub fn decrease_like_num(&mut self) -> Result<()>{
+        let _ = self.like_num.checked_sub(1).ok_or(ErrorCode::ProgramAddError)?;
+        Ok(())
     }
 }
