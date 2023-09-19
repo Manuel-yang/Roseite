@@ -26,6 +26,10 @@ pub mod nft_social_media {
     pub fn decrease_mint_time(ctx: Context<Decrease>) -> Result<()> {
         instructions::decrease(ctx)
     }
+
+    pub fn create_post(ctx: Context<CreatePost>, content: String) -> Result<()> {
+        instructions::create_post(ctx, content)
+    }
 }
 
 #[derive(Accounts)]

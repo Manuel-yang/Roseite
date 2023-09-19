@@ -15,15 +15,9 @@ use serde_json::json;
 use solana_program::sysvar;
 
 pub fn mint<'info>(ctx: Context<MintNft>) -> Result<()> {
-    let payer_key = ctx.accounts.payer.key().clone();
-    let mint_key = ctx.accounts.nft_mint.key().clone();
-    let nft_config_pda = &mut *ctx.accounts.nft_config_pda.clone();
-
-    let nft_config_pda_bump = *ctx
-    .bumps
-    .get("nft_config_pda")
-    .ok_or(ErrorCode::StakeBumpError)?;
-
+    let payer_key = ctx.accounts.payer.key();
+    let mint_key = ctx.accounts.nft_mint.key();
+   
     if ctx.accounts.payer.key() != ctx.accounts.program_admin_pda.admin.key() {
         let counter_account = &mut ctx.accounts.counter_account;
         let current_count = &counter_account.count;
@@ -34,9 +28,15 @@ pub fn mint<'info>(ctx: Context<MintNft>) -> Result<()> {
         counter_account.count = current_count - 1;
     }
 
-    let _ = cpi_mint(ctx);
+    let _ = cpi_mint(&ctx);
 
-    
+    let nft_config_pda = &mut ctx.accounts.nft_config_pda;
+
+    let nft_config_pda_bump = *ctx
+    .bumps
+    .get("nft_config_pda")
+    .ok_or(ErrorCode::StakeBumpError)?;
+
     **nft_config_pda = NftConfigPda::init(
         mint_key, 
         payer_key, 
@@ -48,7 +48,7 @@ pub fn mint<'info>(ctx: Context<MintNft>) -> Result<()> {
     Ok(())
 }
 
-pub fn cpi_mint<'info>(ctx: Context<MintNft>) -> Result<()> {
+pub fn cpi_mint<'info>(ctx: &Context<MintNft>) -> Result<()> {
     system_program::create_account(
         // create account
         CpiContext::new(
@@ -106,7 +106,7 @@ pub fn cpi_mint<'info>(ctx: Context<MintNft>) -> Result<()> {
         1,
     )?;
 
-    let program_admin_pda = &ctx.accounts.program_admin_pda;
+    let program_admin_pda = &*ctx.accounts.program_admin_pda;
     let ProgramPda {
         program_pda_bump, ..
     } = **program_admin_pda;
@@ -133,7 +133,7 @@ pub struct MintNft<'info> {
         ],
         bump
     )]
-    pub program_admin_pda: Account<'info, ProgramPda>,
+    pub program_admin_pda: Box<Account<'info, ProgramPda>>,
 
     // pda which store the info of nft
     #[account(
@@ -146,7 +146,7 @@ pub struct MintNft<'info> {
         ],
         bump
     )]
-    pub nft_config_pda: Box<Account<'info, NftConfigPda>>,
+    pub nft_config_pda: Account<'info, NftConfigPda>,
 
     // mint time counter pda
     #[account(mut, constraint = counter_account.authority == payer.key() @ ErrorCode::InvalidPDA)]

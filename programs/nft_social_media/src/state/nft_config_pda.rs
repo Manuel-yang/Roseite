@@ -1,5 +1,5 @@
 use anchor_lang::prelude::*;
-
+use crate::errors::ErrorCode;
 #[account]
 pub struct NftConfigPda {
 
@@ -33,8 +33,9 @@ impl NftConfigPda {
         let _ = self.fans_num.checked_sub(1);
     }
 
-    pub fn increase_posts_num(&mut self) {
-        let _ = self.posts_num.checked_add(1);
+    pub fn increase_posts_num(&mut self) -> Result<()> {
+        self.posts_num = self.posts_num.checked_add(1).ok_or(ErrorCode::ProgramAddError)?;
+        Ok(())
     }
 
     pub fn decrease_posts_num(&mut self) {

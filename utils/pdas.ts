@@ -4,6 +4,7 @@ import { TOKEN_METADATA_PROGRAM_ID, CANDY_MACHINE_PROGRAM_ID, PROGRAM_ID, COLLEC
 import * as token from "@solana/spl-token";
 import { Connection } from '@solana/web3.js';
 import { programs } from '@metaplex/js';
+import { BN } from "bn.js";
 const { Metadata, MetadataData } = programs.metadata;
 
 export const getMetadataPDA = async (
@@ -117,6 +118,21 @@ export const getNftConfigPda = async (
     [
       Buffer.from("nft_config_pda"),
       mint_address.toBuffer(),
+    ],
+    PROGRAM_ID
+  ))
+  return data
+}
+
+export const getPostPda = async (
+  mint_address: PublicKey,
+  num
+) => {
+  const data = (await anchor.web3.PublicKey.findProgramAddressSync(
+    [
+      Buffer.from("post_pda"),
+      mint_address.toBuffer(),
+      new BN(num).toArrayLike(Buffer, "le", 8),
     ],
     PROGRAM_ID
   ))
