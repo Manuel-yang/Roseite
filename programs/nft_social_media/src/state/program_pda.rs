@@ -19,5 +19,4 @@ impl ProgramPda {
         self.admin = admin;
         Ok(())
     }
-
 }

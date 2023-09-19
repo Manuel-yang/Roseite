@@ -3,15 +3,14 @@ use crate::state::{NftConfigPda, PostPda};
 use anchor_lang::prelude::*;
 use anchor_spl::token::{Mint, TokenAccount};
 
-pub fn create_post(ctx: Context<CreatePost>, content: String) -> Result<()> {
-    let post_pda = &mut ctx.accounts.post_pda;
-    **post_pda = PostPda::init(ctx.accounts.nft_config_pda.nft_mint.key(), content, 0, 0);
-    let _ = ctx.accounts.nft_config_pda.increase_posts_num();
+pub fn delete_post(ctx: Context<DeletePost>, _post_id: u64) -> Result<()> {
+    let _ = ctx.accounts.nft_config_pda.decrease_posts_num();
     Ok(())
 }
 
 #[derive(Accounts)]
-pub struct CreatePost<'info> {
+#[instruction(_post_id:u64)]
+pub struct DeletePost<'info> {
     #[account(mut)]
     payer: Signer<'info>,
 
@@ -19,10 +18,9 @@ pub struct CreatePost<'info> {
     nft_config_pda: Account<'info, NftConfigPda>,
 
     #[account(
-        init_if_needed,
-        payer = payer,
-        space = 4000,
-        seeds = [b"post_pda",nft_config_pda.nft_mint.as_ref(), &nft_config_pda.posts_num.to_le_bytes()],
+        mut,
+        seeds = [b"post_pda",nft_config_pda.nft_mint.as_ref(), &_post_id.to_le_bytes()],
+        close = payer,
         bump
     )]
     pub post_pda: Account<'info, PostPda>,
@@ -39,7 +37,7 @@ pub struct CreatePost<'info> {
         mut,
         associated_token::mint = nft_mint,
         associated_token::authority = payer,
-        constraint = nft_token.amount == 1 @ ErrorCode::TokenAccountEmpty
+        constraint = nft_token.amount == 1 @ ErrorCode::TokenAccountEmpty,
       )]
     nft_token: Account<'info, TokenAccount>,
 

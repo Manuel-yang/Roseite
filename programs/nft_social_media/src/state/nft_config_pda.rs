@@ -1,8 +1,7 @@
-use anchor_lang::prelude::*;
 use crate::errors::ErrorCode;
+use anchor_lang::prelude::*;
 #[account]
 pub struct NftConfigPda {
-
     pub nft_mint: Pubkey,
 
     pub nft_current_holder: Pubkey,
@@ -15,7 +14,13 @@ pub struct NftConfigPda {
 }
 
 impl NftConfigPda {
-    pub fn init(nft_mint: Pubkey, nft_current_holder: Pubkey, fans_num: u64, posts_num: u64, bump: u8) -> Self {
+    pub fn init(
+        nft_mint: Pubkey,
+        nft_current_holder: Pubkey,
+        fans_num: u64,
+        posts_num: u64,
+        bump: u8,
+    ) -> Self {
         Self {
             nft_mint,
             nft_current_holder,
@@ -25,23 +30,35 @@ impl NftConfigPda {
         }
     }
 
-    pub fn increase_fans_num(&mut self) -> Result<()>{
-        let _ = self.fans_num.checked_add(1).ok_or(ErrorCode::ProgramAddError)?;
+    pub fn increase_fans_num(&mut self) -> Result<()> {
+        self.fans_num = self
+            .fans_num
+            .checked_add(1)
+            .ok_or(ErrorCode::ProgramAddError)?;
         Ok(())
     }
 
-    pub fn decrease_fans_num(&mut self) -> Result<()>{
-        let _ = self.fans_num.checked_sub(1).ok_or(ErrorCode::ProgramAddError)?;
+    pub fn decrease_fans_num(&mut self) -> Result<()> {
+        self.fans_num = self
+            .fans_num
+            .checked_sub(1)
+            .ok_or(ErrorCode::ProgramAddError)?;
         Ok(())
     }
 
     pub fn increase_posts_num(&mut self) -> Result<()> {
-        self.posts_num = self.posts_num.checked_add(1).ok_or(ErrorCode::ProgramAddError)?;
+        self.posts_num = self
+            .posts_num
+            .checked_add(1)
+            .ok_or(ErrorCode::ProgramAddError)?;
         Ok(())
     }
 
-    pub fn decrease_posts_num(&mut self) -> Result<()>{
-        let _ = self.posts_num.checked_sub(1).ok_or(ErrorCode::ProgramAddError)?;
+    pub fn decrease_posts_num(&mut self) -> Result<()> {
+        self.posts_num = self
+            .posts_num
+            .checked_sub(1)
+            .ok_or(ErrorCode::ProgramAddError)?;
         Ok(())
     }
 }

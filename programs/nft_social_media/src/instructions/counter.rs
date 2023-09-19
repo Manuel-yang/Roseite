@@ -87,7 +87,7 @@ pub struct Decrease<'info> {
         bump
     )]
     pub program_admin_pda: Account<'info, ProgramPda>,
-    
+
     #[account(
     init_if_needed,
     payer = payer,

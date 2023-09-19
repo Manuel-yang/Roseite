@@ -30,6 +30,10 @@ pub mod nft_social_media {
     pub fn create_post(ctx: Context<CreatePost>, content: String) -> Result<()> {
         instructions::create_post(ctx, content)
     }
+    
+    pub fn delete_post(ctx: Context<DeletePost>, post_id:u64) -> Result<()> {
+        instructions::delete_post(ctx, post_id)
+    }
 }
 
 #[derive(Accounts)]

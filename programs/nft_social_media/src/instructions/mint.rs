@@ -1,7 +1,7 @@
 use super::counter::Counter;
 use crate::errors::ErrorCode;
-use crate::state::ProgramPda;
 use crate::state::NftConfigPda;
+use crate::state::ProgramPda;
 use anchor_lang::prelude::*;
 use anchor_lang::system_program;
 use anchor_spl::associated_token;
@@ -17,7 +17,7 @@ use solana_program::sysvar;
 pub fn mint<'info>(ctx: Context<MintNft>) -> Result<()> {
     let payer_key = ctx.accounts.payer.key();
     let mint_key = ctx.accounts.nft_mint.key();
-   
+
     if ctx.accounts.payer.key() != ctx.accounts.program_admin_pda.admin.key() {
         let counter_account = &mut ctx.accounts.counter_account;
         let current_count = &counter_account.count;
@@ -33,16 +33,11 @@ pub fn mint<'info>(ctx: Context<MintNft>) -> Result<()> {
     let nft_config_pda = &mut ctx.accounts.nft_config_pda;
 
     let nft_config_pda_bump = *ctx
-    .bumps
-    .get("nft_config_pda")
-    .ok_or(ErrorCode::StakeBumpError)?;
+        .bumps
+        .get("nft_config_pda")
+        .ok_or(ErrorCode::StakeBumpError)?;
 
-    **nft_config_pda = NftConfigPda::init(
-        mint_key, 
-        payer_key, 
-        0, 
-        0, 
-        nft_config_pda_bump);
+    **nft_config_pda = NftConfigPda::init(mint_key, payer_key, 0, 0, nft_config_pda_bump);
     let log = json!({"Func":"mint","nft_holder": nft_config_pda.nft_current_holder.to_string(),"fans_num": nft_config_pda.fans_num.to_string(), "posts_num": nft_config_pda.posts_num.to_string()});
     msg!("{}", serde_json::to_string_pretty(&log).unwrap());
     Ok(())
