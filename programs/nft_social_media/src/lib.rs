@@ -19,8 +19,8 @@ pub mod nft_social_media {
         instructions::admin::create_program_pda(ctx, admin)
     }
 
-    pub fn add_mint_time(ctx: Context<Increase>, test:String) -> Result<()> {
-        instructions::increase(ctx, test)
+    pub fn add_mint_time(ctx: Context<Increase>) -> Result<()> {
+        instructions::increase(ctx)
     }
 
     pub fn decrease_mint_time(ctx: Context<Decrease>) -> Result<()> {
