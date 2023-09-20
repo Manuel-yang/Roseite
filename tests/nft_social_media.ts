@@ -1,7 +1,8 @@
 import * as anchor from "@project-serum/anchor";
+import * as fs from 'fs';
 import { Program } from "@project-serum/anchor";
 import { NftSocialMedia } from "../target/types/nft_social_media";
-import { Keypair, PublicKey } from "@solana/web3.js";
+import { Connection, Keypair, PublicKey, clusterApiUrl } from "@solana/web3.js";
 import { getAssociatedAddress, getAuthorityPda, getCandyMachineAuthorityPda, getCollectionDelegateRecordPda, getCounterPda, getMasterEditionPDA, getMetadataPDA, getNftConfigPda, getPostPda, getProgramAdminPda } from "../utils/pdas";
 import bs58 from 'bs58';
 import { findCandyGuardPda } from "@metaplex-foundation/mpl-candy-machine";
@@ -11,12 +12,40 @@ require('dotenv').config()
 import { createUmi } from "@metaplex-foundation/umi-bundle-defaults";
 import { mplCandyMachine } from "@metaplex-foundation/mpl-candy-machine";
 import * as solanaWeb3 from "@solana/web3.js";
+import { Metaplex } from '@metaplex-foundation/js';
 import { BN } from "bn.js";
+const { ShdwDrive } = require("@shadow-drive/sdk");
 const umi = createUmi("https://api.devnet.solana.com").use(mplCandyMachine());
+
+anchor.setProvider(anchor.AnchorProvider.env());
+let provider = anchor.getProvider()
+
+async function uplodateMetadata(id: String) {
+  const privateKey = process.env.SECRET_KEY
+  let secretKey = Uint8Array.from([216,148,227,47,92,204,51,35,65,74,58,252,192,30,151,73,214,129,151,61,195,52,169,203,167,92,221,226,15,252,220,240,185,232,204,91,124,54,50,174,246,86,61,132,233,126,169,52,99,146,205,221,116,115,21,83,216,126,2,147,42,105,160,144]);
+  const keypair = Keypair.fromSecretKey(secretKey);
+  const connection = new Connection(
+    clusterApiUrl("mainnet-beta"),
+    "confirmed"
+);
+  const adminWallet = new anchor.Wallet(keypair);
+  const drive = await new ShdwDrive(connection, adminWallet).init();
+
+  const fileBuff = fs.readFileSync(__dirname+'/template.json');
+  const acctPubKey = new anchor.web3.PublicKey(
+      "98CKHH7X9Y1vAhZ8a5o2NKFt7zWWtic5tSGLC5VE9Rhm"
+  );
+  const fileToUpload = {
+      name: id+".json",
+      file: fileBuff,
+  };
+  const uploadFile = await drive.uploadFile(acctPubKey, fileToUpload);
+  console.log(uploadFile);
+}
 
 describe("nft_social_media", () => {
   // Configure the client to use the local cluster.
-  anchor.setProvider(anchor.AnchorProvider.env());
+
 
   const program = anchor.workspace.NftSocialMedia as Program<NftSocialMedia>;
   const privateKey = process.env.SECRET_KEY
@@ -24,22 +53,23 @@ describe("nft_social_media", () => {
   const adminWallet = Keypair.fromSecretKey(decodedKey);
 
   const mintKeypair: anchor.web3.Keypair = anchor.web3.Keypair.generate();
+  
   // it("create program pda", async () => {
-  //   const programPda = await getProgramAdminPda()
-  //   console.log(programPda)
-  //   try {
-  //     const tx = await program.methods.createProgramPda(adminWallet.publicKey)
-  //     .accounts({
-  //       payer: adminWallet.publicKey,
-  //       programAdminPda: programPda,
-  //       systemProgram: anchor.web3.SystemProgram.programId
-  //     })
-  //     .signers([adminWallet])
-  //     .rpc()
-  //     console.log(tx)
-  //   }catch(e: any) {
-  //     console.log(e)
-  //   }
+    // const programPda = await getProgramAdminPda()
+    // console.log(programPda)
+    // try {
+    //   const tx = await program.methods.createProgramPda(adminWallet.publicKey)
+    //   .accounts({
+    //     payer: adminWallet.publicKey,
+    //     programAdminPda: programPda,
+    //     systemProgram: anchor.web3.SystemProgram.programId
+    //   })
+    //   .signers([adminWallet])
+    //   .rpc()
+    //   console.log(tx)
+    // }catch(e: any) {
+    //   console.log(e)
+    // }
   // })
 
   // it("increase", async () => {
@@ -112,63 +142,67 @@ describe("nft_social_media", () => {
       .signers([adminWallet, mintKeypair])
       .preInstructions([instruction])
       .rpc()
-      console.log(tx)
-      console.log(mintKeypair.publicKey)
+      // console.log(tx)
+      // console.log(mintKeypair.publicKey)
+      const metaplex = new Metaplex(provider.connection);
+      let res = await metaplex.nfts().findByMint({mintAddress: mintKeypair.publicKey},{commitment: 'confirmed'})
+      let id = res.name.split("#")[1]
+      return await uplodateMetadata(id)
     }catch(e: any) {
       console.log(e)
     }
 
   });
 
-  it("create a post", async () => {
-    // let mintKeypair = new PublicKey("Fkq1LTTWrCJpXSvdeAJBDUPXNUcx8v9Tm4Po65nr4dbt")
-    const nftConfigPda = await getNftConfigPda(mintKeypair.publicKey)
-    const postNum = await (await program.account.nftConfigPda.fetch(nftConfigPda[0])).postsNum
-    const postPda = await getPostPda(mintKeypair.publicKey, postNum)
-    const tokenAddress = await getAssociatedAddress(mintKeypair.publicKey, adminWallet.publicKey)
-    try {
-      let tx = await program.methods.createPost("So, what is this for? Put it on your website as placeholder text. Print it out as a speech for your next affirmation circle and see if anyone can guess a computer wrote it. Use it to write the hottest new bestseller in the self-help section, or generate marketing copy for a new line of cheesecloth tunics or zero-point energy wands!So, what is this for? Put it on your website as placeholder text. Print it out as a speech for your next affirmation circle and see if anyone can guess a computer wrote it. Use it to write the hottest new bestseller in the self-help section, or generate marketing copy for a new line of cheesecloth tunics or zero-point energy wands!  or generate marketing copy for a new line of cheesecloth tunics or zero-point energy wands!")
-      .accounts({
-        payer: adminWallet.publicKey,
-        nftConfigPda: nftConfigPda[0],
-        postPda: postPda[0],
-        nftMint: mintKeypair.publicKey,
-        nftToken: tokenAddress
-      })
-      .signers([adminWallet])
-      .rpc()
-      const res = await (await program.account.postPda.fetch(postPda[0]))
-      console.log(res)
-    }catch(error: any) {
-      console.log(error)
-    }
+  // it("create a post", async () => {
+  //   // let mintKeypair = new PublicKey("Fkq1LTTWrCJpXSvdeAJBDUPXNUcx8v9Tm4Po65nr4dbt")
+  //   const nftConfigPda = await getNftConfigPda(mintKeypair.publicKey)
+  //   const postNum = await (await program.account.nftConfigPda.fetch(nftConfigPda[0])).postsNum
+  //   const postPda = await getPostPda(mintKeypair.publicKey, postNum)
+  //   const tokenAddress = await getAssociatedAddress(mintKeypair.publicKey, adminWallet.publicKey)
+  //   try {
+  //     let tx = await program.methods.createPost("So, what is this for? Put it on your website as placeholder text. Print it out as a speech for your next affirmation circle and see if anyone can guess a computer wrote it. Use it to write the hottest new bestseller in the self-help section, or generate marketing copy for a new line of cheesecloth tunics or zero-point energy wands!So, what is this for? Put it on your website as placeholder text. Print it out as a speech for your next affirmation circle and see if anyone can guess a computer wrote it. Use it to write the hottest new bestseller in the self-help section, or generate marketing copy for a new line of cheesecloth tunics or zero-point energy wands!  or generate marketing copy for a new line of cheesecloth tunics or zero-point energy wands!")
+  //     .accounts({
+  //       payer: adminWallet.publicKey,
+  //       nftConfigPda: nftConfigPda[0],
+  //       postPda: postPda[0],
+  //       nftMint: mintKeypair.publicKey,
+  //       nftToken: tokenAddress
+  //     })
+  //     .signers([adminWallet])
+  //     .rpc()
+  //     const res = await (await program.account.postPda.fetch(postPda[0]))
+  //     console.log(res)
+  //   }catch(error: any) {
+  //     console.log(error)
+  //   }
 
-    console.log("postPda address:",postPda)
-    let res = await program.account.nftConfigPda.fetch(nftConfigPda[0])
-    console.log(res)
-  })
+  //   console.log("postPda address:",postPda)
+  //   let res = await program.account.nftConfigPda.fetch(nftConfigPda[0])
+  //   console.log(res)
+  // })
 
-  it("delete a post", async () => {
-    const nftConfigPda = await getNftConfigPda(mintKeypair.publicKey)
-    const postNum = await (await program.account.nftConfigPda.fetch(nftConfigPda[0])).postsNum
-    const postPda = await getPostPda(mintKeypair.publicKey, new BN(Number(postNum)-1))
-    const tokenAddress = await getAssociatedAddress(mintKeypair.publicKey, adminWallet.publicKey)
-    try {
-      let tx = await program.methods.deletePost(new BN(Number(postNum)-1))
-      .accounts({
-        payer: adminWallet.publicKey,
-        nftConfigPda: nftConfigPda[0],
-        postPda: postPda[0],
-        nftMint: mintKeypair.publicKey,
-        nftToken: tokenAddress
-      })
-      .signers([adminWallet])
-      .rpc()
-    }catch(error: any) {
-      console.log(error)
-    }
+  // it("delete a post", async () => {
+  //   const nftConfigPda = await getNftConfigPda(mintKeypair.publicKey)
+  //   const postNum = await (await program.account.nftConfigPda.fetch(nftConfigPda[0])).postsNum
+  //   const postPda = await getPostPda(mintKeypair.publicKey, new BN(Number(postNum)-1))
+  //   const tokenAddress = await getAssociatedAddress(mintKeypair.publicKey, adminWallet.publicKey)
+  //   try {
+  //     let tx = await program.methods.deletePost(new BN(Number(postNum)-1))
+  //     .accounts({
+  //       payer: adminWallet.publicKey,
+  //       nftConfigPda: nftConfigPda[0],
+  //       postPda: postPda[0],
+  //       nftMint: mintKeypair.publicKey,
+  //       nftToken: tokenAddress
+  //     })
+  //     .signers([adminWallet])
+  //     .rpc()
+  //   }catch(error: any) {
+  //     console.log(error)
+  //   }
 
-    let res = await program.account.nftConfigPda.fetch(nftConfigPda[0])
-    console.log(res)
-  })
+  //   let res = await program.account.nftConfigPda.fetch(nftConfigPda[0])
+  //   console.log(res)
+  // })
 });

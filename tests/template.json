@@ -1,0 +1,19 @@
+{
+    "name": "NSM",
+    "symbol": "NSM",
+    "description": "Nft social Media",
+    "seller_fee_basis_points": 500,
+    "image": "https://shdw-drive.genesysgo.net/98CKHH7X9Y1vAhZ8a5o2NKFt7zWWtic5tSGLC5VE9Rhm/nft.jpg",
+    "properties":
+    {
+        "files":
+        [
+            {
+                "uri": "https://shdw-drive.genesysgo.net/98CKHH7X9Y1vAhZ8a5o2NKFt7zWWtic5tSGLC5VE9Rhm/nft.jpg",
+                "type": "image/jpg"
+            }
+        ],
+        "fans":
+        []
+    }
+}

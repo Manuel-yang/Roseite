@@ -91,7 +91,7 @@ async function getCandyMachineData(
       type: 'hidden',
       hash: create32BitsHash('NSM'),
       name: 'NSM #$ID+1$',
-      uri: 'https://assets.seedslabs.io/test/metadata/BladeChamp/$ID+1$.json',//待替换 https:seedsnft.s3.ap-northeast-1.amazonaws.com/seedsnft/metadata/$ID+1$.json
+      uri: 'https://shdw-drive.genesysgo.net/98CKHH7X9Y1vAhZ8a5o2NKFt7zWWtic5tSGLC5VE9Rhm/$ID+1$.json',//待替换 https:seedsnft.s3.ap-northeast-1.amazonaws.com/seedsnft/metadata/$ID+1$.json
     },
     collection: {
       address: collectionAddress,
@@ -122,7 +122,7 @@ async function createCollection() {
     {
       name: 'NSM',
       symbol: 'NSM',
-      uri: 'https://seeds.mypinata.cloud/ipfs/QmXm11dhz5cqXPoiNShhbSzKmXvqi5UqhW4j3cHCGtARid',
+      uri: 'https://shdw-drive.genesysgo.net/98CKHH7X9Y1vAhZ8a5o2NKFt7zWWtic5tSGLC5VE9Rhm/image.jpg',
       sellerFeeBasisPoints: 500,
       isCollection: true,
       updateAuthority: secretKey,
