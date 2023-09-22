@@ -1,7 +1,12 @@
 <template>
-  <tweet-form @added="addTweet"></tweet-form>
-  <tweet-list v-model:tweets="tweets" :loading="loading" :has-more="hasNextPage" @more="getNextPage"></tweet-list>
-  <NftBlock :metadataList="metadataList"></NftBlock>
+  <div 
+    v-loading.fullscreen.lock="loading" 
+    element-loading-text="Loading your nfts..."  
+  >
+    <tweet-form @added="addTweet"></tweet-form>
+    <tweet-list v-model:tweets="tweets" :loading="loading" :has-more="hasNextPage" @more="getNextPage"></tweet-list>
+    <NftBlock :metadataList="metadataList"></NftBlock>
+  </div>
 </template>
 
 <script>
@@ -9,7 +14,8 @@
 import { providerStore } from '@/store/providerStore'
 import { useWallet } from 'solana-wallets-vue'
 import  NftBlock  from '@/components/NftBlock.vue'
-import { toRaw, computed, watch } from 'vue'
+import { toRaw, computed, watch, ref } from 'vue'
+
 export default {
   name: 'homeView',
   components: {
@@ -18,7 +24,8 @@ export default {
   data() {
     return {
       nftList: [],
-      metadataList: []
+      metadataList: [],
+      loading: false
     }
   },
   /**
@@ -38,6 +45,7 @@ export default {
     }
   })
     watch(connectedWallet, async (currentPublicKey) => {
+      this.loading = true
       store.userAddress = currentPublicKey
       await store.scanNfts()
       this.nftList = toRaw(store.nftList)
@@ -48,7 +56,17 @@ export default {
           this.metadataList.push(toRaw(this.nftList[i]))
         }
       }
+      this.loading = false
     })
   },
 }
 </script>
+
+<style>
+body {
+  margin: 0;
+}
+.example-showcase .el-loading-mask {
+  z-index: 9;
+}
+</style>
