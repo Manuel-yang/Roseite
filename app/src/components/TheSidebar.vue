@@ -54,8 +54,6 @@
 <script>
 import { WalletMultiButton, useWallet } from 'solana-wallets-vue'
 import { providerStore } from '@/store/providerStore';
-// const {connected } = useWallet()
-// console.log(connected)
 export default {
   name: 'theSidebar',
   components: {
