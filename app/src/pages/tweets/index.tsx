@@ -5,10 +5,12 @@ import TweetList from "../../components/TweetList";
 import useTweets from "../../hooks/useTweets";
 import useWorkspace from "../../hooks/useWorkspace";
 import Base from "../../templates/Base";
+import useNftScanner from "../../hooks/useNftScanner";
 
 export default function Tweets() {
   const workspace = useWorkspace();
   const { tweets, recentTweets, loading, hasMore, loadMore, prefetch, deleteTweet } = useTweets();
+  const { nftsList } = useNftScanner()
 
   useEffect(() => {
     prefetch([]);
@@ -34,6 +36,7 @@ export default function Tweets() {
               deleteTweet={deleteTweet}
             />
           ) : null}
+          {JSON.stringify(nftsList)}
         </div>
         <div className="relative mb-8 w-72">
           <div className="duration-400 fixed h-full w-72 pb-44 transition-all">
