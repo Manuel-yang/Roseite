@@ -11,8 +11,8 @@ export interface Workspace {
   program: Program;
 }
 
-const preflightCommitment = "processed";
-const commitment = "processed";
+const preflightCommitment = "confirmed";
+const commitment = "confirmed";
 const programId = new PublicKey(idl.metadata.address);
 
 export default function useWorkspace() {
