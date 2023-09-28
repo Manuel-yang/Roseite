@@ -9,6 +9,7 @@ export type nftInfo = {
 	data: {
 			creators: any[];
 			name: string;
+			metadata?: any;
 			symbol: string;
 			uri: string;
 			sellerFeeBasisPoints: number;
@@ -38,14 +39,24 @@ export function NftScannerProvider({ children }: { children: ReactNode }) {
 						connection: workspace.connection
 				})
 					.then((nfts) => {
-							let res = nfts.filter((nft) => {
-									return nft.data.symbol == "NSM"
-							})
-							setNftsList(res)
+						nfts.map((nft) => {
+							if(nft.data.symbol == "NSM") {
+								getNftMetadata(nft).then((metadata) => {
+									let tempNft = nft as nftInfo
+									tempNft.data.metadata = metadata
+									setNftsList(prevNfts => [...prevNfts, tempNft])
+								})
+							} 
+						})
 					})
 			}
 	},[workspace]);
-	console.log(nftsList)
+
+	const getNftMetadata = async (nft: nftInfo) => {
+		const response = await fetch(nft.data.uri)
+		const nftMetadata = await response.json()
+		return nftMetadata
+	}
 
 	return (
 			<NftScannerContext.Provider value={{ nftsList }}>
