@@ -1,4 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { Button, Modal } from "flowbite-react";
+import { useWallet } from "@solana/wallet-adapter-react";
 import RecentTweets from "../../components/RecentTweets";
 import TweetForm from "../../components/TweetForm";
 import TweetList from "../../components/TweetList";
@@ -9,13 +11,22 @@ import useNftScanner from "../../hooks/useNftScanner";
 
 export default function Tweets() {
   const workspace = useWorkspace();
+  const { connected } = useWallet();
+
+  const { nftsList } = useNftScanner();
   const { tweets, recentTweets, loading, hasMore, loadMore, prefetch, deleteTweet } = useTweets();
-  const { nftsList } = useNftScanner()
+  const [selectedNFTId, setselectedNFTId] = useState<number | undefined>();
+  const [openModal, setOpenModal] = useState<boolean>();
+  const props = { openModal, setOpenModal };
 
   useEffect(() => {
     prefetch([]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    setOpenModal(connected);
+  }, [connected]);
 
   return (
     <Base>
@@ -26,6 +37,48 @@ export default function Tweets() {
               Tweets
             </h2>
           </div>
+          {nftsList ? (
+            <>
+              <Modal show={props.openModal} onClose={() => props.setOpenModal(false)}>
+                <Modal.Header>Select your NFT Account</Modal.Header>
+                <Modal.Body>
+                  <div className="max-h-96 overflow-y-auto">
+                    <div className="grid grid-cols-4 gap-2">
+                      {nftsList.map((nft, index) => (
+                        <div
+                          key={index}
+                          className={`flex flex-col items-center mb-4 ${selectedNFTId === index ? "selected" : ""}`}
+                        >
+                          <img
+                            className={`w-32 h-32 rounded-lg mb-1 ${
+                              selectedNFTId === index ? "border-4 border-blue-500" : ""
+                            }`}
+                            src={nft.data.metadata.properties.files[0].uri}
+                            alt={nft.data.name}
+                            onClick={() => {
+                              setselectedNFTId(index);
+                            }}
+                          />
+                          <p className="text-sm">{nft.data.name}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </Modal.Body>
+                <Modal.Footer>
+                  {selectedNFTId !== undefined ? (
+                    <div className="mb-2 w-full">Select NFT: {nftsList[selectedNFTId]?.data.name}</div>
+                  ) : null}
+                  <div className="w-full flex space-x-2">
+                    <Button onClick={() => props.setOpenModal(false)}>Confirm</Button>
+                    <Button color="gray" onClick={() => props.setOpenModal(false)}>
+                      Cancel
+                    </Button>
+                  </div>
+                </Modal.Footer>
+              </Modal>
+            </>
+          ) : null}
           <TweetForm />
           {workspace ? (
             <TweetList
@@ -36,7 +89,6 @@ export default function Tweets() {
               deleteTweet={deleteTweet}
             />
           ) : null}
-          {JSON.stringify(nftsList)}
         </div>
         <div className="relative mb-8 w-72">
           <div className="duration-400 fixed h-full w-72 pb-44 transition-all">
