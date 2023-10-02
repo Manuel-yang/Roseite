@@ -1,5 +1,5 @@
 import { getParsedNftAccountsByOwner } from "@nfteyez/sol-rayz";
-import { ReactNode, createContext, useEffect, useState } from "react";
+import { ReactNode, createContext, useEffect, useMemo, useState } from "react";
 import useWorkspace from "../hooks/useWorkspace";
 import { MetadataKey } from "@nfteyez/sol-rayz/dist/config/metaplex";
 
@@ -24,16 +24,23 @@ export type nftInfo = {
 
 interface NftsContextState {
   nftsList: nftInfo[];
+  nftLoading: boolean;
+  selectedNftId: number | undefined;
+  setSelectedNftId: (id: number | undefined) => void;
 }
 
 const NftScannerContext = createContext<NftsContextState>(null!);
 
 export function NftScannerProvider({ children }: { children: ReactNode }) {
-  const workspace = useWorkspace();
   const [nftsList, setNftsList] = useState<nftInfo[]>([]);
+  const [selectedNftId, setSelectedNftId] = useState<number | undefined>();
+  const [nftLoading, setNftLoading] = useState(false);
+
+  const workspace = useWorkspace();
 
   useEffect(() => {
     if (workspace) {
+      setNftLoading(true);
       getParsedNftAccountsByOwner({
         publicAddress: workspace.wallet.publicKey.toBase58(),
         connection: workspace.connection,
@@ -53,7 +60,10 @@ export function NftScannerProvider({ children }: { children: ReactNode }) {
             });
           }
         });
+        setNftLoading(false);
       });
+    } else {
+      setNftLoading(false);
     }
   }, [workspace]);
 
@@ -63,7 +73,17 @@ export function NftScannerProvider({ children }: { children: ReactNode }) {
     return nftMetadata;
   };
 
-  return <NftScannerContext.Provider value={{ nftsList }}>{children}</NftScannerContext.Provider>;
+  const value = useMemo(
+    () => ({
+      nftsList,
+      nftLoading,
+      selectedNftId,
+      setSelectedNftId,
+    }),
+    [nftsList, nftLoading, selectedNftId, setSelectedNftId]
+  );
+
+  return <NftScannerContext.Provider value={value}>{children}</NftScannerContext.Provider>;
 }
 
 export default NftScannerContext;

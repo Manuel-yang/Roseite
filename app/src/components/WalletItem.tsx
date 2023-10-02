@@ -1,18 +1,14 @@
 import { useState } from "react";
 import { Menu, MenuButton, MenuDivider, MenuItem } from "@szhsin/react-menu";
 import { PublicKey } from "@solana/web3.js";
-import {
-  HiOutlineKey,
-  HiOutlinePencilAlt,
-  HiOutlineUserCircle,
-  HiOutlineClipboardCopy,
-} from "react-icons/hi";
+import { HiOutlineKey, HiOutlinePencilAlt, HiOutlineUserCircle, HiOutlineClipboardCopy } from "react-icons/hi";
 import { toCollapse } from "../utils";
 
 import "@szhsin/react-menu/dist/index.css";
 import "@szhsin/react-menu/dist/transitions/slide.css";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { Avatar } from "flowbite-react";
+import useNftScanner from "../hooks/useNftScanner";
 
 export default function WalletItem({
   publicKey,
@@ -24,7 +20,7 @@ export default function WalletItem({
   showModal: () => void;
 }) {
   const [copyLabel, setCopyLabel] = useState("Copy to clipboard");
-
+  const { nftsList, selectedNftId } = useNftScanner();
   const { disconnect } = useWallet();
 
   const copyToClipboard = () => {
@@ -36,11 +32,15 @@ export default function WalletItem({
     <Menu
       menuButton={
         <MenuButton>
-          <Avatar
-            img={`https://avatars.dicebear.com/api/jdenticon/${publicKey.toBase58()}.svg`}
-            size="md"
-            rounded={true}
-          />
+          {selectedNftId !== undefined ? (
+            <Avatar img={nftsList[selectedNftId]?.data.metadata.properties.files[0].uri} size={"md"} rounded={true} />
+          ) : (
+            <Avatar
+              img={`https://avatars.dicebear.com/api/jdenticon/${publicKey.toBase58()}.svg`}
+              size="md"
+              rounded={true}
+            />
+          )}
         </MenuButton>
       }
       transition
@@ -53,16 +53,10 @@ export default function WalletItem({
               onClick={copyToClipboard}
             >
               <div className="mr-3 flex h-10 w-10 items-center justify-center rounded-md bg-primary-500 text-primary-100">
-                {hover ? (
-                  <HiOutlineClipboardCopy size={20} />
-                ) : (
-                  <HiOutlineKey size={20} />
-                )}
+                {hover ? <HiOutlineClipboardCopy size={20} /> : <HiOutlineKey size={20} />}
               </div>
               <div>
-                <p className="text-sm">
-                  {hover ? copyLabel : "Signed in Wallet"}
-                </p>
+                <p className="text-sm">{hover ? copyLabel : "Signed in Wallet"}</p>
                 <p className="font-medium">{toCollapse(publicKey)}</p>
               </div>
             </button>
@@ -77,11 +71,7 @@ export default function WalletItem({
               onClick={showModal}
             >
               <div className="mr-3 flex h-10 w-10 items-center justify-center rounded-md bg-primary-500 text-primary-100">
-                {hover ? (
-                  <HiOutlinePencilAlt size={20} />
-                ) : (
-                  <HiOutlineUserCircle size={20} />
-                )}
+                {hover ? <HiOutlinePencilAlt size={20} /> : <HiOutlineUserCircle size={20} />}
               </div>
               <div>
                 <p className="text-sm">{hover ? "Edit Alias" : "User Alias"}</p>
@@ -93,10 +83,7 @@ export default function WalletItem({
       </MenuItem>
       <MenuDivider />
       <MenuItem>
-        <button
-          className="flex w-full h-8 items-center px-3 text-color-primary"
-          onClick={() => disconnect()}
-        >
+        <button className="flex w-full h-8 items-center px-3 text-color-primary" onClick={() => disconnect()}>
           Disconnect wallet
         </button>
       </MenuItem>

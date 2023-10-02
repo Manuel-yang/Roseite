@@ -8,16 +8,15 @@ import useTweets from "../../hooks/useTweets";
 import useWorkspace from "../../hooks/useWorkspace";
 import Base from "../../templates/Base";
 import useNftScanner from "../../hooks/useNftScanner";
+import Loader from "../../components/Loader";
 
 export default function Tweets() {
   const workspace = useWorkspace();
   const { connected } = useWallet();
-
-  const { nftsList } = useNftScanner();
+  const { nftsList, nftLoading, selectedNftId, setSelectedNftId } = useNftScanner();
   const { tweets, recentTweets, loading, hasMore, loadMore, prefetch, deleteTweet } = useTweets();
-  const [selectedNFTId, setselectedNFTId] = useState<number | undefined>();
   const [openModal, setOpenModal] = useState<boolean>();
-  const props = { openModal, setOpenModal };
+  const [selectingId, setSelectingId] = useState<number>();
 
   useEffect(() => {
     prefetch([]);
@@ -39,40 +38,48 @@ export default function Tweets() {
           </div>
           {nftsList ? (
             <>
-              <Modal show={props.openModal} onClose={() => props.setOpenModal(false)}>
+              <Modal show={openModal} onClose={() => setOpenModal(false)}>
                 <Modal.Header>Select your NFT Account</Modal.Header>
                 <Modal.Body>
                   <div className="max-h-96 overflow-y-auto">
                     <div className="grid grid-cols-4 gap-2">
-                      {nftsList.map((nft, index) => (
-                        <div
-                          key={index}
-                          className={`flex flex-col items-center mb-4 ${selectedNFTId === index ? "selected" : ""}`}
-                        >
-                          <img
-                            className={`w-32 h-32 rounded-lg mb-1 ${
-                              selectedNFTId === index ? "border-4 border-blue-500" : ""
-                            }`}
-                            src={nft.data.metadata.properties.files[0].uri}
-                            alt={nft.data.name}
-                            onClick={() => {
-                              setselectedNFTId(index);
-                            }}
-                          />
-                          <p className="text-sm">{nft.data.name}</p>
-                        </div>
-                      ))}
+                      {nftLoading ? (
+                        <Loader />
+                      ) : (
+                        nftsList.map((nft, index) => (
+                          <div
+                            key={index}
+                            className={`flex flex-col items-center mb-4 ${selectedNftId === index ? "selected" : ""}`}
+                          >
+                            <img
+                              className={`w-32 h-32 rounded-lg mb-1 ${
+                                selectingId === index ? "border-4 border-blue-500" : ""
+                              }`}
+                              src={nft.data.metadata.properties.files[0].uri}
+                              alt={nft.data.name}
+                              onClick={() => {
+                                setSelectingId(index);
+                              }}
+                            />
+                            <p className="text-sm">{nft.data.name}</p>
+                          </div>
+                        ))
+                      )}
                     </div>
                   </div>
                 </Modal.Body>
                 <Modal.Footer>
-                  {selectedNFTId !== undefined ? (
-                    <div className="mb-2 w-full">Select NFT: {nftsList[selectedNFTId]?.data.name}</div>
+                  {selectingId !== undefined ? (
+                    <div className="mb-2 w-full">Select NFT: {nftsList[selectingId]?.data.name}</div>
                   ) : null}
-                  <div className="w-full flex space-x-2">
-                    <Button onClick={() => props.setOpenModal(false)}>Confirm</Button>
-                    <Button color="gray" onClick={() => props.setOpenModal(false)}>
-                      Cancel
+                  <div className="w-1/2 flex space-x-2">
+                    <Button
+                      onClick={() => {
+                        setSelectedNftId(selectingId);
+                        setOpenModal(false);
+                      }}
+                    >
+                      Confirm
                     </Button>
                   </div>
                 </Modal.Footer>

@@ -33,24 +33,13 @@ export default function Sidebar() {
                 <div className="mx-auto mb-4">
                   <Link href="/">
                     <a className="inline-block p-3 hover:bg-fill-third md:self-start rounded-full">
-                      <Image
-                        src="/chat.png"
-                        width={50}
-                        height={50}
-                        alt="logo"
-                      />
+                      <Image src="/chat.png" width={50} height={50} alt="logo" />
                     </a>
                   </Link>
                 </div>
-                <h1 className="mb-0 text-2xl font-semibold text-color-primary">
-                  Solana Twitter
-                </h1>
-                <p className="text-xs italic text-color-secondary">
-                  Solana communication platform
-                </p>
-                <p className="text-xs italic text-color-secondary">
-                  Created using Anchor, Solana, and Next.js
-                </p>
+                <h1 className="mb-0 text-2xl font-semibold text-color-primary">Solana X - NFT</h1>
+                <p className="text-xs italic text-color-secondary">Solana communication platform</p>
+                <p className="text-xs italic text-color-secondary">Generate your own Moment NFT </p>
               </div>
             </div>
           </div>
@@ -62,15 +51,11 @@ export default function Sidebar() {
           <Link href="/">
             <a
               className={
-                (router.pathname.startsWith("/tweets") ||
-                router.pathname === "/"
-                  ? "font-bold "
-                  : "") +
+                (router.pathname.startsWith("/tweets") || router.pathname === "/" ? "font-bold " : "") +
                 "inline-flex items-center space-x-4 rounded-full p-3 hover:bg-fill-third md:w-full"
               }
             >
-              {router.pathname.startsWith("/tweets") ||
-              router.pathname === "/" ? (
+              {router.pathname.startsWith("/tweets") || router.pathname === "/" ? (
                 <HiHome size={28} />
               ) : (
                 <HiOutlineHome size={28} />
@@ -85,11 +70,7 @@ export default function Sidebar() {
                 "inline-flex items-center space-x-4 rounded-full p-3 hover:bg-fill-third md:w-full"
               }
             >
-              {router.pathname.startsWith("/tags") ? (
-                <HiHashtag size={28} />
-              ) : (
-                <HiOutlineHashtag size={28} />
-              )}
+              {router.pathname.startsWith("/tags") ? <HiHashtag size={28} /> : <HiOutlineHashtag size={28} />}
               <div className="hidden text-xl md:block">Tags</div>
             </a>
           </Link>
@@ -100,11 +81,7 @@ export default function Sidebar() {
                 "inline-flex items-center space-x-4 rounded-full p-3 hover:bg-fill-third md:w-full"
               }
             >
-              {router.pathname.startsWith("/users") ? (
-                <HiUserGroup size={28} />
-              ) : (
-                <HiOutlineUserGroup size={28} />
-              )}
+              {router.pathname.startsWith("/users") ? <HiUserGroup size={28} /> : <HiOutlineUserGroup size={28} />}
               <div className="hidden text-xl md:block">Users</div>
             </a>
           </Link>
@@ -116,11 +93,7 @@ export default function Sidebar() {
                   "inline-flex items-center space-x-4 rounded-full p-3 hover:bg-fill-third md:w-full"
                 }
               >
-                {router.pathname.startsWith("/profile") ? (
-                  <HiUser size={28} />
-                ) : (
-                  <HiOutlineUser size={28} />
-                )}
+                {router.pathname.startsWith("/profile") ? <HiUser size={28} /> : <HiOutlineUser size={28} />}
                 <div className="hidden text-xl md:block">Profile</div>
               </a>
             </Link>
@@ -130,10 +103,7 @@ export default function Sidebar() {
           <Tooltip content="View on GitHub" style={theme}>
             <Link href="https://github.com/curest0x1021/SolanaTwitter">
               <a target="_blank" rel="noopener noreferrer">
-                <FaGithub
-                  size={24}
-                  className="text-color-third hover:text-color-primary"
-                />
+                <FaGithub size={24} className="text-color-third hover:text-color-primary" />
               </a>
             </Link>
           </Tooltip>
