@@ -14,7 +14,7 @@ import NftSelectModal from "../../components/NftSelectModal";
 export default function Tweets() {
   const workspace = useWorkspace();
   const { connected } = useWallet();
-  const { nftsList, nftLoading, setSelectedNftId } = useNftScanner();
+  const { nftsList, nftLoading, selectedNftId, setSelectedNftId } = useNftScanner();
   const { tweets, recentTweets, loading, hasMore, loadMore, prefetch, deleteTweet } = useTweets();
   const [openModal, setOpenModal] = useState<boolean>(false);
 
@@ -51,13 +51,16 @@ export default function Tweets() {
           ) : null}
           <TweetForm />
           {workspace ? (
-            <TweetList
-              tweets={tweets}
-              loading={loading}
-              hasMore={hasMore}
-              loadMore={loadMore}
-              deleteTweet={deleteTweet}
-            />
+            <div>
+              {selectedNftId !== undefined && JSON.stringify(nftsList[selectedNftId])}
+              <TweetList
+                tweets={tweets}
+                loading={loading}
+                hasMore={hasMore}
+                loadMore={loadMore}
+                deleteTweet={deleteTweet}
+              />
+            </div>
           ) : null}
         </div>
         <div className="relative mb-8 w-72">
