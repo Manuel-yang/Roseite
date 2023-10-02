@@ -7,7 +7,6 @@ import { toCollapse } from "../utils";
 import "@szhsin/react-menu/dist/index.css";
 import "@szhsin/react-menu/dist/transitions/slide.css";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { Avatar } from "flowbite-react";
 import useNftScanner from "../hooks/useNftScanner";
 
 export default function WalletItem({
@@ -33,12 +32,15 @@ export default function WalletItem({
       menuButton={
         <MenuButton>
           {selectedNftId !== undefined ? (
-            <Avatar img={nftsList[selectedNftId]?.data.metadata.properties.files[0].uri} size={"md"} rounded={true} />
+            <img
+              className="w-11 rounded-full"
+              src={nftsList[selectedNftId]?.data.metadata.properties.files[0].uri}
+              alt={nftsList[selectedNftId]?.data.name}
+            />
           ) : (
-            <Avatar
-              img={`https://avatars.dicebear.com/api/jdenticon/${publicKey.toBase58()}.svg`}
-              size="md"
-              rounded={true}
+            <img
+              className="w-10 rounded-full"
+              src={`https://avatars.dicebear.com/api/jdenticon/${publicKey.toBase58()}.svg`}
             />
           )}
         </MenuButton>

@@ -9,14 +9,18 @@ import useWorkspace from "../../hooks/useWorkspace";
 import Base from "../../templates/Base";
 import useNftScanner from "../../hooks/useNftScanner";
 import Loader from "../../components/Loader";
+import NftSelectModal from "../../components/NftSelectModal";
 
 export default function Tweets() {
   const workspace = useWorkspace();
   const { connected } = useWallet();
-  const { nftsList, nftLoading, selectedNftId, setSelectedNftId } = useNftScanner();
+  const { nftsList, nftLoading, setSelectedNftId } = useNftScanner();
   const { tweets, recentTweets, loading, hasMore, loadMore, prefetch, deleteTweet } = useTweets();
-  const [openModal, setOpenModal] = useState<boolean>();
-  const [selectingId, setSelectingId] = useState<number>();
+  const [openModal, setOpenModal] = useState<boolean>(false);
+
+  const handleModalClose = () => {
+    setOpenModal(false);
+  };
 
   useEffect(() => {
     prefetch([]);
@@ -37,54 +41,13 @@ export default function Tweets() {
             </h2>
           </div>
           {nftsList ? (
-            <>
-              <Modal show={openModal} onClose={() => setOpenModal(false)}>
-                <Modal.Header>Select your NFT Account</Modal.Header>
-                <Modal.Body>
-                  <div className="max-h-96 overflow-y-auto">
-                    <div className="grid grid-cols-4 gap-2">
-                      {nftLoading ? (
-                        <Loader />
-                      ) : (
-                        nftsList.map((nft, index) => (
-                          <div
-                            key={index}
-                            className={`flex flex-col items-center mb-4 ${selectedNftId === index ? "selected" : ""}`}
-                          >
-                            <img
-                              className={`w-32 h-32 rounded-lg mb-1 ${
-                                selectingId === index ? "border-4 border-blue-500" : ""
-                              }`}
-                              src={nft.data.metadata.properties.files[0].uri}
-                              alt={nft.data.name}
-                              onClick={() => {
-                                setSelectingId(index);
-                              }}
-                            />
-                            <p className="text-sm">{nft.data.name}</p>
-                          </div>
-                        ))
-                      )}
-                    </div>
-                  </div>
-                </Modal.Body>
-                <Modal.Footer>
-                  {selectingId !== undefined ? (
-                    <div className="mb-2 w-full">Select NFT: {nftsList[selectingId]?.data.name}</div>
-                  ) : null}
-                  <div className="w-1/2 flex space-x-2">
-                    <Button
-                      onClick={() => {
-                        setSelectedNftId(selectingId);
-                        setOpenModal(false);
-                      }}
-                    >
-                      Confirm
-                    </Button>
-                  </div>
-                </Modal.Footer>
-              </Modal>
-            </>
+            <NftSelectModal
+              isShow={openModal}
+              loading={nftLoading}
+              nfts={nftsList}
+              close={handleModalClose}
+              confirm={setSelectedNftId}
+            />
           ) : null}
           <TweetForm />
           {workspace ? (
