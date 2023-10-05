@@ -8,6 +8,12 @@
 // import { commentTweetFilter, fetchComments } from "./comments";
 // import { AnchorWallet } from "@solana/wallet-adapter-react";
 
+import { PublicKey } from "@metaplex-foundation/js"
+import { program } from "@project-serum/anchor/dist/cjs/spl/associated-token"
+import { getNftConfigPda, getPostPda, getAssociatedAddress } from "../../utils/pdas"
+import useWorkspace from "../../hooks/useWorkspace"
+import { Transaction } from "@solana/web3.js"
+
 // export const fetchTweets = async (program: Program, filters: any[] = []) => {
 //   const tweets = await program.account.tweet.all(filters);
 
@@ -356,3 +362,31 @@
 //     bytes: bs58.encode(Buffer.from(tag)),
 //   },
 // });
+
+export const sendTweet = async (nftMintAddress: PublicKey, content: string) => {
+  // let mintKeypair = new PublicKey("Fkq1LTTWrCJpXSvdeAJBDUPXNUcx8v9Tm4Po65nr4dbt")
+  const workspace = useWorkspace()
+  if (workspace) {
+    const program = workspace.program
+    const nftConfigPda = await getNftConfigPda(nftMintAddress)
+    const postNum = await (await program.account.nftConfigPda.fetch(nftConfigPda[0])).postsNum
+    const postPda = await getPostPda(nftMintAddress, postNum)
+    const tokenAddress = await getAssociatedAddress(nftMintAddress, workspace.wallet.publicKey)
+    try {
+      let createPostIns = await program.methods.createPost(content)
+      .accounts({
+        payer: workspace.wallet.publicKey,
+        nftConfigPda: nftConfigPda[0],
+        postPda: postPda[0],
+        nftMint: nftMintAddress,
+        nftToken: tokenAddress
+      })
+      .rpc()
+      // const createPostTx = new Transaction()
+      // createPostTx.add(createPostIns)
+      // workspace.wallet.signAllTransactions(createPostIns)
+    }catch(error: any) {
+      console.log(error)
+    }
+  }
+}

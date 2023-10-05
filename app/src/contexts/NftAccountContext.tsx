@@ -15,7 +15,7 @@ export type nftConfigPdaAccount = {
 }
 
 interface NftAccountState {
-  // selectedNftAccount: nftInfo,
+  selectedNft: nftInfo,
 }
 
 const NftAccountContext = createContext<NftAccountState>(null!);
@@ -39,10 +39,15 @@ export function NftAccountProvidr({ children }: { children: ReactNode }) {
         }
       }
     },[selectedNft ,NftScanner])
-    if(nftConfigPdaAccount) {
-      console.log(nftConfigPdaAccount)
-      // console.log((nftConfigPdaAccount.postsNum).toNumber())
-    }
 
-    return <NftAccountContext.Provider value="">{children}</NftAccountContext.Provider>
+    const value = useMemo(
+      () => ({
+        selectedNft
+      }),
+      [selectedNft]
+    );
+
+    return <NftAccountContext.Provider value={value}>{children}</NftAccountContext.Provider>
 }
+
+export default NftAccountContext

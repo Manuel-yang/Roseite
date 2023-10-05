@@ -44,13 +44,14 @@ export default function TweetForm({ forceTag }: { forceTag?: string }) {
       "Transaction in progress. Please wait...",
       theme
     );
+    // console.log(data)
     const result = await sendTweet(effectiveTag, data.content);
-    notifyUpdate(toastId, result.message, result.tweet ? "success" : "error");
+    // notifyUpdate(toastId, result.message, result.tweet ? "success" : "error");
 
-    if (result.tweet) {
-      resetField("content");
-      setTag("");
-    }
+    // if (result.tweet) {
+    //   resetField("content");
+    //   setTag("");
+    // }
   };
 
   return (
