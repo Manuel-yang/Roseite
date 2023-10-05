@@ -3,6 +3,7 @@ import { Provider, AnchorProvider, Program } from "@project-serum/anchor";
 import idl from "../idl/solana_twitter.json";
 import { AnchorWallet, useAnchorWallet, useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { useMemo } from "react";
+import { createProgram } from "../utils/utils";
 
 export interface Workspace {
   wallet: AnchorWallet;
@@ -34,7 +35,7 @@ export default function useWorkspace() {
   const program = useMemo(() => {
     if (provider) {
       // @ts-ignore
-      return new Program(idl, programId, provider);
+      return createProgram(provider)
     } else {
       return null;
     }

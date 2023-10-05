@@ -6,21 +6,22 @@ import WalletItem from "./WalletItem";
 import UserEditModal from "./UserEditModal";
 import { useRouter } from "next/router";
 import ThemeSwitcher from "./ThemeSwitcher";
-import useUsers from "../hooks/useUsers";
+// import useUsers from "../hooks/useUsers";
 
 export default function Menubar() {
   const [showEditModal, setShowEditModal] = useState(false);
   const [alias, setAlias] = useState("");
 
-  const { getUserAlias } = useUsers();
+  // const { getUserAlias } = useUsers();
   const wallet = useAnchorWallet();
   const { connected } = useWallet();
 
   useEffect(() => {
     if (wallet && !showEditModal) {
-      getUserAlias(wallet.publicKey).then((value) => setAlias(value));
+      // getUserAlias(wallet.publicKey).then((value) => setAlias(value));
     }
-  }, [wallet, showEditModal, getUserAlias]);
+  // }, [wallet, showEditModal, getUserAlias]);
+}, [wallet, showEditModal]);
 
   return (
     <div className="fixed top-0 w-full z-40">

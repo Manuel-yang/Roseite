@@ -5,7 +5,7 @@ pub mod instructions;
 // pub mod pdas;
 pub mod state;
 
-declare_id!("7Y8TMYmwvJEPQPUJ33uhH1Y44XPoKi93EQRgtZrtAcs9");
+declare_id!("4o1n5ZszsVuEwbHQuQtaZsfmEDgzjMPJKL4vDjNkCvW3");
 
 #[program]
 pub mod nft_social_media {

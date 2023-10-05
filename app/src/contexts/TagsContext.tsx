@@ -1,7 +1,7 @@
 import { createContext, ReactNode, useEffect, useMemo, useState } from "react";
 import useWorkspace from "../hooks/useWorkspace";
 import { TagType } from "../models";
-import { fetchTags } from "../pages/api/tweets";
+// import { fetchTags } from "../pages/api/tweets";
 
 interface TagsContextState {
   tags: TagType[];
@@ -18,24 +18,24 @@ export function TagsProvider({ children }: { children: ReactNode }) {
 
   const workspace = useWorkspace();
 
-  useEffect(() => {
-    if (workspace) {
-      setLoading(true);
-      fetchTags(workspace)
-        .then((data) => {
-          setTags(data);
-          const recentOrdered = data
-            .sort((a, b) => b.timestamp - a.timestamp)
-            .slice(0, 5);
-          setRecentTags(recentOrdered);
-        })
-        .finally(() => setLoading(false));
-    } else {
-      setTags([]);
-      setRecentTags([]);
-      setLoading(false);
-    }
-  }, [workspace]);
+  // useEffect(() => {
+  //   if (workspace) {
+  //     setLoading(true);
+  //     fetchTags(workspace)
+  //       .then((data) => {
+  //         setTags(data);
+  //         const recentOrdered = data
+  //           .sort((a, b) => b.timestamp - a.timestamp)
+  //           .slice(0, 5);
+  //         setRecentTags(recentOrdered);
+  //       })
+  //       .finally(() => setLoading(false));
+  //   } else {
+  //     setTags([]);
+  //     setRecentTags([]);
+  //     setLoading(false);
+  //   }
+  // }, [workspace]);
 
   const value = useMemo(
     () => ({

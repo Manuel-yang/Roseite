@@ -4,7 +4,7 @@ import { CommentsProvider } from "./CommentsContext";
 import { TagsProvider } from "./TagsContext";
 import { ThemeProvider } from "./ThemeContext";
 import { TweetsProvider } from "./TweetsContext";
-import { UsersProvider } from "./UsersContext";
+// import { UsersProvider } from "./UsersContext";
 import { NftScannerProvider } from "./NftScannerContext";
 import { NftAccountProvidr } from "./NftAccountContext";
 
@@ -20,11 +20,11 @@ export default function AppContext({ children }: { children: ReactNode }) {
         <NftScannerProvider>
           <NftAccountProvidr>
             <TweetsProvider>
-              <UsersProvider>
+              {/* <UsersProvider> */}
                 <TagsProvider>
                   <CommentsProvider>{children}</CommentsProvider>
                 </TagsProvider>
-              </UsersProvider>
+              {/* </UsersProvider> */}
             </TweetsProvider>
           </NftAccountProvidr>
         </NftScannerProvider>
