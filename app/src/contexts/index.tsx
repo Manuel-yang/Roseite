@@ -6,6 +6,7 @@ import { ThemeProvider } from "./ThemeContext";
 import { TweetsProvider } from "./TweetsContext";
 import { UsersProvider } from "./UsersContext";
 import { NftScannerProvider } from "./NftScannerContext";
+import { NftAccountProvidr } from "./NftAccountContext";
 
 const SolanaProvider = dynamic(
   () => import('./SolanaContext').then(({ SolanaProvider }) => SolanaProvider),
@@ -17,13 +18,15 @@ export default function AppContext({ children }: { children: ReactNode }) {
     <ThemeProvider>
       <SolanaProvider>
         <NftScannerProvider>
-          <TweetsProvider>
-            <UsersProvider>
-              <TagsProvider>
-                <CommentsProvider>{children}</CommentsProvider>
-              </TagsProvider>
-            </UsersProvider>
-          </TweetsProvider>
+          <NftAccountProvidr>
+            <TweetsProvider>
+              <UsersProvider>
+                <TagsProvider>
+                  <CommentsProvider>{children}</CommentsProvider>
+                </TagsProvider>
+              </UsersProvider>
+            </TweetsProvider>
+          </NftAccountProvidr>
         </NftScannerProvider>
       </SolanaProvider>
     </ThemeProvider>
