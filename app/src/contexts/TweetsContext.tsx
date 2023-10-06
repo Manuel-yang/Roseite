@@ -58,14 +58,13 @@ export function TweetsProvider({ children }: { children: ReactNode }) {
 
   const _sendTweet = useCallback(
     async (tag: string, content: string) => {
-      console.log(NftAccount)
       if (workspace && NftAccount) {
         const nftMintAddress = new PublicKey(NftAccount.selectedNft.mint)
-        await sendTweet(workspace,nftMintAddress, content);
-        // if (result.tweet) {
-        //   setTweets((prev) => [result.tweet, ...prev]);
-        // }
-        // return result;
+        let result = await sendTweet(workspace,nftMintAddress, content);
+        if (result.tweet) {
+          setTweets((prev) => [result.tweet, ...prev]);
+        }
+        return result;
       } else {
         return { tweet: null, message: "Connect wallet to starting tweet..." };
       }

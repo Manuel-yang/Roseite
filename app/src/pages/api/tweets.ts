@@ -381,11 +381,10 @@ export const sendTweet = async (workspace: any, nftMintAddress: PublicKey, conte
         nftToken: tokenAddress
       })
       .rpc()
-      // const createPostTx = new Transaction()
-      // createPostTx.add(createPostIns)
-      // workspace.wallet.signAllTransactions(createPostIns)
+      return {tweet: content}
     }catch(error: any) {
       console.log(error)
+      return error
     }
   }
 }
