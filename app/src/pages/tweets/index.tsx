@@ -10,11 +10,13 @@ import Base from "../../templates/Base";
 import useNftScanner from "../../hooks/useNftScanner";
 import Loader from "../../components/Loader";
 import NftSelectModal from "../../components/NftSelectModal";
+import useNftAccount from "../../hooks/useNftAccount";
 
 export default function Tweets() {
   const workspace = useWorkspace();
   const { connected } = useWallet();
   const { nftsList, nftLoading, selectedNftId, setSelectedNftId } = useNftScanner();
+  const { postPdaAccountList } = useNftAccount()
   const { tweets, recentTweets, loading, hasMore, loadMore, prefetch, deleteTweet } = useTweets();
   const [openModal, setOpenModal] = useState<boolean>(false);
 
@@ -53,6 +55,7 @@ export default function Tweets() {
           {workspace ? (
             <div>
               {selectedNftId !== undefined && JSON.stringify(nftsList[selectedNftId])}
+              {JSON.stringify(postPdaAccountList)}
               <TweetList
                 tweets={tweets}
                 loading={loading}
