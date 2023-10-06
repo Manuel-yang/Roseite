@@ -104,7 +104,7 @@ async function getCandyMachineData(
         guards: {
           addressGate: {
             address: new PublicKey(
-              '2ctTwUTworNMBN8WnfixJrmim55rRDtekrcZWMjesQU2', // 通过当前账号可以mint不要手续费，待替换
+              '5hQuukq75QtannUJsHxMTvBbmc2ivCayqQHzPD4fp9Ti', // 通过当前账号可以mint不要手续费，待替换
             ),
           },
         },

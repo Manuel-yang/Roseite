@@ -11,7 +11,7 @@
 import { PublicKey } from "@metaplex-foundation/js"
 import { program } from "@project-serum/anchor/dist/cjs/spl/associated-token"
 import { getNftConfigPda, getPostPda, getAssociatedAddress } from "../../utils/pdas"
-import useWorkspace from "../../hooks/useWorkspace"
+import useWorkspace, { Workspace } from "../../hooks/useWorkspace"
 import { Transaction } from "@solana/web3.js"
 
 // export const fetchTweets = async (program: Program, filters: any[] = []) => {
@@ -363,9 +363,8 @@ import { Transaction } from "@solana/web3.js"
 //   },
 // });
 
-export const sendTweet = async (nftMintAddress: PublicKey, content: string) => {
+export const sendTweet = async (workspace: any, nftMintAddress: PublicKey, content: string) => {
   // let mintKeypair = new PublicKey("Fkq1LTTWrCJpXSvdeAJBDUPXNUcx8v9Tm4Po65nr4dbt")
-  const workspace = useWorkspace()
   if (workspace) {
     const program = workspace.program
     const nftConfigPda = await getNftConfigPda(nftMintAddress)

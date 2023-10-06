@@ -26,7 +26,7 @@ export function NftAccountProvidr({ children }: { children: ReactNode }) {
     const [nftConfigPdaAccount, setNftConfigPdaAccount] = useState<nftConfigPdaAccount>()
     
     useEffect(() => {
-      if(NftScanner.selectedNftId && workspace) {
+      if(NftScanner.selectedNftId != undefined && workspace) {
         const program = workspace.program
         setSelectedNft(NftScanner.nftsList[NftScanner.selectedNftId])
         if(selectedNft) {

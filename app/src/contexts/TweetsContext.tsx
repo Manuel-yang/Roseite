@@ -3,7 +3,6 @@ import { createContext, ReactNode, useCallback, useEffect, useMemo, useState } f
 import useWorkspace from "../hooks/useWorkspace";
 import { Tweet } from "../models";
 import { deleteTweet, getTweet, paginateTweets, sendTweet, updateTweet } from "../pages/api/tweets";
-import useNftScanner from "../hooks/useNftScanner";
 import useNftAccount from "../hooks/useNftAccount";
 
 interface TweetsContextState {
@@ -30,7 +29,6 @@ export function TweetsProvider({ children }: { children: ReactNode }) {
 
   const workspace = useWorkspace();
   const NftAccount = useNftAccount();
-
   const onNewPage = (newTweets: Tweet[], more: boolean) => {
     setTweets((prev) => [...prev, ...newTweets]);
     setLoading(false);
@@ -61,10 +59,9 @@ export function TweetsProvider({ children }: { children: ReactNode }) {
   const _sendTweet = useCallback(
     async (tag: string, content: string) => {
       console.log(NftAccount)
-      // 
       if (workspace && NftAccount) {
-        
-        // const result = await sendTweet(workspace, content);
+        const nftMintAddress = new PublicKey(NftAccount.selectedNft.mint)
+        await sendTweet(workspace,nftMintAddress, content);
         // if (result.tweet) {
         //   setTweets((prev) => [result.tweet, ...prev]);
         // }
@@ -74,7 +71,7 @@ export function TweetsProvider({ children }: { children: ReactNode }) {
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [workspace]
+    [workspace,NftAccount]
   );
 
   const _updateTweet = useCallback(

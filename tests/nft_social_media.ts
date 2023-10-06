@@ -69,8 +69,6 @@ async function editeMetadata(uri: string) {
 
 describe("nft_social_media", () => {
   // Configure the client to use the local cluster.
-
-
   const program = anchor.workspace.NftSocialMedia as Program<NftSocialMedia>;
   const privateKey = process.env.SECRET_KEY
   const decodedKey = bs58.decode(privateKey);
@@ -79,42 +77,42 @@ describe("nft_social_media", () => {
   const mintKeypair: anchor.web3.Keypair = anchor.web3.Keypair.generate();
   
   // it("create program pda", async () => {
-    // const programPda = await getProgramAdminPda()
-    // console.log(programPda)
-    // try {
-    //   const tx = await program.methods.createProgramPda(adminWallet.publicKey)
-    //   .accounts({
-    //     payer: adminWallet.publicKey,
-    //     programAdminPda: programPda,
-    //     systemProgram: anchor.web3.SystemProgram.programId
-    //   })
-    //   .signers([adminWallet])
-    //   .rpc()
-    //   console.log(tx)
-    // }catch(e: any) {
-    //   console.log(e)
-    // }
+  //   const programPda = await getProgramAdminPda()
+  //   console.log(programPda)
+  //   try {
+  //     const tx = await program.methods.createProgramPda(adminWallet.publicKey)
+  //     .accounts({
+  //       payer: adminWallet.publicKey,
+  //       programAdminPda: programPda,
+  //       systemProgram: anchor.web3.SystemProgram.programId
+  //     })
+  //     .signers([adminWallet])
+  //     .rpc()
+  //     console.log(tx)
+  //   }catch(e: any) {
+  //     console.log(e)
+  //   }
   // })
 
-  it("increase", async () => {
-    const counterAccount = await getCounterPda(program.programId, adminWallet.publicKey)
-    const programPda = await getProgramAdminPda()
-    try {
-      const tx = await program.methods.addMintTime()
-      .accounts({
-        programAdminPda: programPda,
-        counterAccount: counterAccount[0],
-        payer: adminWallet.publicKey,
-        user: adminWallet.publicKey,
-        systemProgram: anchor.web3.SystemProgram.programId
-      })
-      .signers([adminWallet])
-      .rpc()
-      console.log(tx)
-    }catch(e: any) {
-      console.log(e)
-    }
-  })
+  // it("increase", async () => {
+  //   const counterAccount = await getCounterPda(program.programId, adminWallet.publicKey)
+  //   const programPda = await getProgramAdminPda()
+  //   try {
+  //     const tx = await program.methods.addMintTime()
+  //     .accounts({
+  //       programAdminPda: programPda,
+  //       counterAccount: counterAccount[0],
+  //       payer: adminWallet.publicKey,
+  //       user: adminWallet.publicKey,
+  //       systemProgram: anchor.web3.SystemProgram.programId
+  //     })
+  //     .signers([adminWallet])
+  //     .rpc()
+  //     console.log(tx)
+  //   }catch(e: any) {
+  //     console.log(e)
+  //   }
+  // })
 
   it("mint test", async () => {
     const candyGuardAddress = findCandyGuardPda(umi, { base: publicKey(CANDY_MACHINE) });
@@ -178,13 +176,13 @@ describe("nft_social_media", () => {
 
   });
 
-  it("edit metadatafile", async () => {
-    // const metaplex = new Metaplex(provider.connection);
-    // let res = await metaplex.nfts().findByMint({mintAddress: mintKeypair.publicKey},{commitment: 'confirmed'})
-    // let uri = res.uri
-    console.log("https://shdw-drive.genesysgo.net/98CKHH7X9Y1vAhZ8a5o2NKFt7zWWtic5tSGLC5VE9Rhm/6.json")
-    // await editeMetadata(uri)
-  })
+  // it("edit metadatafile", async () => {
+  //   // const metaplex = new Metaplex(provider.connection);
+  //   // let res = await metaplex.nfts().findByMint({mintAddress: mintKeypair.publicKey},{commitment: 'confirmed'})
+  //   // let uri = res.uri
+  //   // console.log("https://shdw-drive.genesysgo.net/98CKHH7X9Y1vAhZ8a5o2NKFt7zWWtic5tSGLC5VE9Rhm/6.json")
+  //   // await editeMetadata(uri)
+  // })
 
   // it("create a post", async () => {
   //   // let mintKeypair = new PublicKey("Fkq1LTTWrCJpXSvdeAJBDUPXNUcx8v9Tm4Po65nr4dbt")
