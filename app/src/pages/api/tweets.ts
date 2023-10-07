@@ -372,7 +372,7 @@ export const sendTweet = async (workspace: any, nftMintAddress: PublicKey, conte
     const postPda = await getPostPda(nftMintAddress, postNum);
     const tokenAddress = await getAssociatedAddress(nftMintAddress, workspace.wallet.publicKey);
     try {
-      let createPostIns = await program.methods
+      await program.methods
         .createPost(content)
         .accounts({
           payer: workspace.wallet.publicKey,
@@ -382,7 +382,7 @@ export const sendTweet = async (workspace: any, nftMintAddress: PublicKey, conte
           nftToken: tokenAddress,
         })
         .rpc();
-      return { tweet: content };
+      return { tweet: content, message: "Your tweet was sent successfully!", };
     } catch (error: any) {
       console.log(error);
       return error;

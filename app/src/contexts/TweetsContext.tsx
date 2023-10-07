@@ -53,9 +53,10 @@ export function TweetsProvider({ children }: { children: ReactNode }) {
     }
   }, [pagination]);
 
-  useEffect(() => {
-    setRecentTweets(tweets.slice(0, 5));
-  }, [tweets]);
+  // need to be fix
+  // useEffect(() => {
+  //   setRecentTweets(tweets.slice(0, 5));
+  // }, [tweets]);
 
   const _sendTweet = useCallback(
     async (tag: string, content: string) => {

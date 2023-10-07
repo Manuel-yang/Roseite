@@ -46,7 +46,7 @@ export default function TweetForm({ forceTag }: { forceTag?: string }) {
     );
     // console.log(data)
     const result = await sendTweet(effectiveTag, data.content);
-    // notifyUpdate(toastId, result.message, result.tweet ? "success" : "error");
+    notifyUpdate(toastId, result.message, result.tweet ? "success" : "error");
 
     // if (result.tweet) {
     //   resetField("content");
