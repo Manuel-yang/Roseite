@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import useTheme from "../hooks/useTheme";
 import useWorkspace from "../hooks/useWorkspace";
 import { Tweet } from "../models";
-import { deleteTweet } from "../pages/api/tweets";
+// import { deleteTweet } from "../pages/api/tweets";
 import { notifyLoading, notifyUpdate } from "../utils";
 import Loader from "./Loader";
 import TweetCard from "./TweetCard";
@@ -13,9 +13,7 @@ interface TweetListProps {
   loading: boolean;
   hasMore: boolean;
   loadMore(): void;
-  deleteTweet(
-    tweetKey: PublicKey
-  ): Promise<{ success: boolean; message: string }>;
+  deleteTweet(tweetKey: PublicKey): Promise<{ success: boolean; message: string }>;
 }
 
 export default function TweetList(props: TweetListProps) {
@@ -30,16 +28,11 @@ export default function TweetList(props: TweetListProps) {
 
   const onDelete = async (tweet: Tweet) => {
     if (!workspace) return;
-    const toastId = notifyLoading(
-      "Transaction in progress. Please wait...",
-      theme
-    );
+    const toastId = notifyLoading("Transaction in progress. Please wait...", theme);
     const result = await deleteTweet(tweet.publickey);
     notifyUpdate(toastId, result.message, result.success ? "success" : "error");
     if (result.success) {
-      const fTweets = filteredTweets.filter(
-        (t) => t.publickey.toBase58() !== tweet.publickey.toBase58()
-      );
+      const fTweets = filteredTweets.filter((t) => t.publickey.toBase58() !== tweet.publickey.toBase58());
       setFilteredTweets(fTweets);
     }
   };

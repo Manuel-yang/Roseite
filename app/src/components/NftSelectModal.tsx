@@ -30,7 +30,7 @@ export default function NftSelectModal({ isShow, loading, nfts, close, confirm }
                 >
                   <img
                     className={`w-32 h-32 rounded-lg mb-1 ${selectingId === index ? "border-4 border-blue-500" : ""}`}
-                    src={nft.data.metadata.properties.files[0].uri}
+                    src={nft.data.metadata.image}
                     alt={nft.data.name}
                     onClick={() => {
                       setSelectingId(index);

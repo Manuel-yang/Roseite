@@ -34,7 +34,7 @@ export default function WalletItem({
           {selectedNftId !== undefined ? (
             <img
               className="w-11 rounded-full"
-              src={nftsList[selectedNftId]?.data.metadata.properties.files[0].uri}
+              src={nftsList[selectedNftId]?.data.metadata.image}
               alt={nftsList[selectedNftId]?.data.name}
             />
           ) : (

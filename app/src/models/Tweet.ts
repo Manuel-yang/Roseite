@@ -2,6 +2,7 @@ import { PublicKey } from "@solana/web3.js";
 import dayjs from "dayjs";
 import { toCollapse } from "../utils";
 import { Comment } from "./Comment";
+import BN from "bn.js";
 
 export type TweetAccount = {
   readonly user: PublicKey;
@@ -14,6 +15,19 @@ export type TweetAccount = {
 export enum TweetState {
   Edited,
   Deleted,
+}
+
+export class UserTweet {
+  nftAddress: PublicKey;
+  content: string;
+  reviewNum: BN;
+  likeNum: BN;
+  constructor(nftAddress: PublicKey, content: string, reviewNum: BN, likeNum: BN) {
+    this.nftAddress = nftAddress;
+    this.content = content;
+    this.reviewNum = reviewNum;
+    this.likeNum = likeNum;
+  }
 }
 
 export class Tweet {

@@ -11,12 +11,13 @@ import useNftScanner from "../../hooks/useNftScanner";
 import Loader from "../../components/Loader";
 import NftSelectModal from "../../components/NftSelectModal";
 import useNftAccount from "../../hooks/useNftAccount";
+import UserTweetCard from "../../components/UserTweetCard";
 
 export default function Tweets() {
   const workspace = useWorkspace();
   const { connected } = useWallet();
   const { nftsList, nftLoading, selectedNftId, setSelectedNftId } = useNftScanner();
-  const { postPdaAccountList } = useNftAccount()
+  const { postPdaAccountList } = useNftAccount();
   const { tweets, recentTweets, loading, hasMore, loadMore, prefetch, deleteTweet } = useTweets();
   const [openModal, setOpenModal] = useState<boolean>(false);
 
@@ -25,7 +26,7 @@ export default function Tweets() {
   };
 
   useEffect(() => {
-    prefetch([]);
+    // prefetch([]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -42,7 +43,7 @@ export default function Tweets() {
               Tweets
             </h2>
           </div>
-          {nftsList ? (
+          {nftsList && selectedNftId === undefined ? (
             <NftSelectModal
               isShow={openModal}
               loading={nftLoading}
@@ -53,16 +54,25 @@ export default function Tweets() {
           ) : null}
           <TweetForm />
           {workspace ? (
-            <div>
-              {selectedNftId !== undefined && JSON.stringify(nftsList[selectedNftId])}
-              {JSON.stringify(postPdaAccountList)}
-              <TweetList
+            <div className="space-y-4">
+              {/* {selectedNftId !== undefined && JSON.stringify(nftsList[selectedNftId])} */}
+              {/* {JSON.stringify(postPdaAccountList)} */}
+              {postPdaAccountList.map((tweet, index) => (
+                <UserTweetCard
+                  key={index}
+                  tweet={tweet}
+                  onDelete={() => {
+                    console.log("delete");
+                  }}
+                />
+              ))}
+              {/* <TweetList
                 tweets={tweets}
                 loading={loading}
                 hasMore={hasMore}
                 loadMore={loadMore}
                 deleteTweet={deleteTweet}
-              />
+              /> */}
             </div>
           ) : null}
         </div>

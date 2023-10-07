@@ -2,7 +2,8 @@ import { PublicKey } from "@solana/web3.js";
 import { createContext, ReactNode, useCallback, useEffect, useMemo, useState } from "react";
 import useWorkspace from "../hooks/useWorkspace";
 import { Tweet } from "../models";
-import { deleteTweet, getTweet, paginateTweets, sendTweet, updateTweet } from "../pages/api/tweets";
+import { sendTweet } from "../pages/api/tweets";
+// import { deleteTweet, getTweet, paginateTweets, sendTweet, updateTweet } from "../pages/api/tweets";
 import useNftAccount from "../hooks/useNftAccount";
 
 interface TweetsContextState {
@@ -13,9 +14,9 @@ interface TweetsContextState {
   prefetch(filters: any[]): void;
   loadMore(): void;
   sendTweet(tag: string, content: string): Promise<{ tweet: Tweet | null; message: string }>;
-  updateTweet(tweet: Tweet, tag: string, content: string): Promise<{ success: boolean; message: string }>;
+  // updateTweet(tweet: Tweet, tag: string, content: string): Promise<{ success: boolean; message: string }>;
   deleteTweet(tweetKey: PublicKey): Promise<{ success: boolean; message: string }>;
-  getTweet(pubkey: PublicKey): Promise<Tweet | null>;
+  // getTweet(pubkey: PublicKey): Promise<Tweet | null>;
 }
 
 const TweetsContext = createContext<TweetsContextState>(null!);
@@ -59,8 +60,8 @@ export function TweetsProvider({ children }: { children: ReactNode }) {
   const _sendTweet = useCallback(
     async (tag: string, content: string) => {
       if (workspace && NftAccount) {
-        const nftMintAddress = new PublicKey(NftAccount.selectedNft.mint)
-        let result = await sendTweet(workspace,nftMintAddress, content);
+        const nftMintAddress = new PublicKey(NftAccount.selectedNft.mint);
+        let result = await sendTweet(workspace, nftMintAddress, content);
         if (result.tweet) {
           setTweets((prev) => [result.tweet, ...prev]);
         }
@@ -70,64 +71,72 @@ export function TweetsProvider({ children }: { children: ReactNode }) {
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [workspace,NftAccount]
+    [workspace, NftAccount]
   );
 
-  const _updateTweet = useCallback(
-    async (tweet: Tweet, tag: string, content: string) => {
-      if (workspace) {
-        const result = await updateTweet(workspace, tweet, tag, content);
-        return result;
-      } else {
-        return {
-          success: false,
-          message: "Connect wallet to update tweet...",
-        };
-      }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [workspace]
-  );
+  // const _updateTweet = useCallback(
+  //   async (tweet: Tweet, tag: string, content: string) => {
+  //     if (workspace) {
+  //       const result = await updateTweet(workspace, tweet, tag, content);
+  //       return result;
+  //     } else {
+  //       return {
+  //         success: false,
+  //         message: "Connect wallet to update tweet...",
+  //       };
+  //     }
+  //   },
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  //   [workspace]
+  // );
 
   const _deleteTweet = useCallback(
     async (tweetKey: PublicKey) => {
-      if (workspace) {
-        const result = await deleteTweet(workspace, tweetKey);
-
-        if (result.success) {
-          setTweets((prev) => prev.filter((t) => t.publickey.toBase58() !== tweetKey.toBase58()));
-        }
-
-        return result;
-      } else {
-        return {
-          success: false,
-          message: "Connect wallet to delete tweet...",
-        };
-      }
+      // if (workspace) {
+      //   const result = await deleteTweet(workspace, tweetKey);
+      //   if (result.success) {
+      //     setTweets((prev) => prev.filter((t) => t.publickey.toBase58() !== tweetKey.toBase58()));
+      //   }
+      //   return result;
+      // } else {
+      return {
+        success: false,
+        message: "Connect wallet to delete tweet...",
+      };
+      // }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [tweets, workspace]
   );
 
-  const getTweetFromPublicKey = useCallback(
-    async (publickey: PublicKey) => {
-      if (workspace) {
-        const tweet = await getTweet(workspace, publickey);
-        return tweet;
-      }
-      return null;
-    },
-    [workspace]
-  );
+  // const getTweetFromPublicKey = useCallback(
+  //   async (publickey: PublicKey) => {
+  //     if (workspace) {
+  //       const tweet = await getTweet(workspace, publickey);
+  //       return tweet;
+  //     }
+  //     return null;
+  //   },
+  //   [workspace]
+  // );
+
+  // const prefetch = useCallback(
+  //   (filters: any[]) => {
+  //     if (workspace) {
+  //       setTweets([]);
+  //       setRecentTweets([]);
+  //       const newPagination = paginateTweets(workspace, filters, 10, onNewPage);
+  //       setPagination(newPagination);
+  //     }
+  //   },
+  //   [workspace]
+  // );
 
   const prefetch = useCallback(
     (filters: any[]) => {
       if (workspace) {
         setTweets([]);
         setRecentTweets([]);
-        const newPagination = paginateTweets(workspace, filters, 10, onNewPage);
-        setPagination(newPagination);
       }
     },
     [workspace]
@@ -149,9 +158,9 @@ export function TweetsProvider({ children }: { children: ReactNode }) {
       prefetch,
       loadMore,
       sendTweet: _sendTweet,
-      updateTweet: _updateTweet,
+      // updateTweet: _updateTweet,
       deleteTweet: _deleteTweet,
-      getTweet: getTweetFromPublicKey,
+      // getTweet: getTweetFromPublicKey,
     }),
     [
       tweets,
@@ -161,9 +170,9 @@ export function TweetsProvider({ children }: { children: ReactNode }) {
       prefetch,
       loadMore,
       _sendTweet,
-      _updateTweet,
+      // _updateTweet,
       _deleteTweet,
-      getTweetFromPublicKey,
+      // getTweetFromPublicKey,
     ]
   );
 
