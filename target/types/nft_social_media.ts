@@ -451,6 +451,10 @@ export type NftSocialMedia = {
           {
             "name": "likeNum",
             "type": "u64"
+          },
+          {
+            "name": "timeStamp",
+            "type": "i64"
           }
         ]
       }
@@ -1064,6 +1068,10 @@ export const IDL: NftSocialMedia = {
           {
             "name": "likeNum",
             "type": "u64"
+          },
+          {
+            "name": "timeStamp",
+            "type": "i64"
           }
         ]
       }

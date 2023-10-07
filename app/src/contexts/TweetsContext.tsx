@@ -35,7 +35,7 @@ export function TweetsProvider({ children }: { children: ReactNode }) {
     setLoading(false);
     setHasMore(more);
   };
-
+  
   useEffect(() => {
     if (!workspace) {
       setPagination(null);

@@ -451,6 +451,10 @@
           {
             "name": "likeNum",
             "type": "u64"
+          },
+          {
+            "name": "timeStamp",
+            "type": "i64"
           }
         ]
       }

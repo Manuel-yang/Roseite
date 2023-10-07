@@ -9,15 +9,18 @@ pub struct PostPda {
     pub review_num: u64,
 
     pub like_num: u64,
+
+    pub time_stamp: i64
 }
 
 impl PostPda {
-    pub fn init(nft_address: Pubkey, content: String, review_num: u64, like_num: u64) -> Self {
+    pub fn init(nft_address: Pubkey, content: String, review_num: u64, like_num: u64, time_stamp: i64) -> Self {
         Self {
             nft_address,
             content,
             review_num,
             like_num,
+            time_stamp
         }
     }
 
