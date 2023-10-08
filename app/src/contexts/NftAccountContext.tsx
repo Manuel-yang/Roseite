@@ -75,6 +75,8 @@ export function NftAccountProvidr({ children }: { children: ReactNode }) {
     }
   }, [postPdaAddressList]);
 
+  console.log(postPdaAccountList)
+
   const value = useMemo(
     () => ({
       selectedNft,

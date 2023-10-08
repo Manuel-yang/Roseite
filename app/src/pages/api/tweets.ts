@@ -13,6 +13,7 @@ import { program } from "@project-serum/anchor/dist/cjs/spl/associated-token";
 import { getNftConfigPda, getPostPda, getAssociatedAddress } from "../../utils/pdas";
 import useWorkspace, { Workspace } from "../../hooks/useWorkspace";
 import { Transaction } from "@solana/web3.js";
+import { Tweet } from "../../models";
 
 // export const fetchTweets = async (program: Program, filters: any[] = []) => {
 //   const tweets = await program.account.tweet.all(filters);
@@ -382,7 +383,10 @@ export const sendTweet = async (workspace: any, nftMintAddress: PublicKey, conte
           nftToken: tokenAddress,
         })
         .rpc();
-      return { tweet: content, message: "Your tweet was sent successfully!", };
+        
+      const account = {user: nftMintAddress, timestamp: Date.now(), state: null, tag: "", content: content}
+      const tweet = new Tweet(nftMintAddress, account)
+      return { tweet: tweet, message: "Your tweet was sent successfully!", };
     } catch (error: any) {
       console.log(error);
       return error;

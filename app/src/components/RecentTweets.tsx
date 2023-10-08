@@ -37,11 +37,11 @@ export default function RecentTweets({ tweets }: { tweets: Tweet[] }) {
                   {tweet.content}
                 </div>
                 <div>
-                  <Link href={`/tags/${tweet.tag}`}>
+                  {/* <Link href={`/tags/${tweet.tag}`}>
                     <a className="text-primary-500 transition-colors hover:underline">
                       {`#${tweet.tag}`}
                     </a>
-                  </Link>
+                  </Link> */}
                 </div>
               </div>
             </li>
