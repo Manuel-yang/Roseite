@@ -29,7 +29,7 @@ export function TweetsProvider({ children }: { children: ReactNode }) {
   const [hasMore, setHasMore] = useState(false);
 
   const workspace = useWorkspace();
-  const NftAccount = useNftAccount();
+  const {selectedNft, postPdaAddressList, setPostPdaAddressList} = useNftAccount();
   const onNewPage = (newTweets: Tweet[], more: boolean) => {
     setTweets((prev) => [...prev, ...newTweets]);
     setLoading(false);
@@ -60,10 +60,11 @@ export function TweetsProvider({ children }: { children: ReactNode }) {
 
   const _sendTweet = useCallback(
     async (tag: string, content: string) => {
-      if (workspace && NftAccount) {
-        const nftMintAddress = new PublicKey(NftAccount.selectedNft.mint);
+      if (workspace && selectedNft) {
+        const nftMintAddress = new PublicKey(selectedNft.mint);
         let result = await sendTweet(workspace, nftMintAddress, content);
         if (result.tweet) {
+          setPostPdaAddressList((prev: PublicKey[]): PublicKey[] => [...prev, result.postPdaAddress]);
           setTweets((prev) => [result.tweet, ...prev]);
         }
         return result;
@@ -72,7 +73,7 @@ export function TweetsProvider({ children }: { children: ReactNode }) {
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [workspace, NftAccount]
+    [workspace, selectedNft, postPdaAddressList]
   );
   // const _updateTweet = useCallback(
   //   async (tweet: Tweet, tag: string, content: string) => {

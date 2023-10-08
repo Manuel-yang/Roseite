@@ -27,7 +27,11 @@ interface NftAccountState {
   selectedNft: nftInfo;
   nftConfigPdaAccount: nftConfigPdaAccount;
   postPdaAddressList: PublicKey[];
+  rawPostPdaAccountList: postPdaAccount[];
   postPdaAccountList: postPdaAccount[];
+  setPostPdaAddressList: React.Dispatch<React.SetStateAction<PublicKey[]>>;
+  setRawPostPdaAccountList:(postPdaAddressList: postPdaAccount[]) => void;
+  setPostPdaAccountList:(postPdaAddressList: postPdaAccount[]) => void;
 }
 
 const NftAccountContext = createContext<NftAccountState>(null!);
@@ -69,11 +73,20 @@ export function NftAccountProvidr({ children }: { children: ReactNode }) {
   // get content of post pda
   useEffect(() => {
     if (postPdaAddressList && workspace) {
-      postPdaAddressList.forEach((pdaAddress) => {
-        workspace.program.account.postPda.fetch(pdaAddress).then((postPdaAccount) => {
+      // init data
+      if(nftConfigPdaAccount.postsNum.toNumber() == postPdaAddressList.length) {
+        postPdaAddressList.forEach((pdaAddress) => {
+          workspace.program.account.postPda.fetch(pdaAddress).then((postPdaAccount) => {
+            setRawPostPdaAccountList((prev) => [...prev, postPdaAccount]);
+          });
+        });
+      }
+      // add new tweet after tweeting
+      if(rawPostPdaAccountList.length == postPdaAddressList.length-1) {
+        workspace.program.account.postPda.fetch(postPdaAddressList[postPdaAddressList.length-1]).then((postPdaAccount) => {
           setRawPostPdaAccountList((prev) => [...prev, postPdaAccount]);
         });
-      });
+      }
     }
   }, [postPdaAddressList]);
 
@@ -86,17 +99,20 @@ export function NftAccountProvidr({ children }: { children: ReactNode }) {
     }
   },[rawPostPdaAccountList])
 
-
-  // console.log(sortByTimestamp.reverse())
+  console.log(postPdaAddressList)
 
   const value = useMemo(
     () => ({
       selectedNft,
       nftConfigPdaAccount,
       postPdaAddressList,
+      rawPostPdaAccountList,
       postPdaAccountList,
+      setPostPdaAddressList,
+      setRawPostPdaAccountList,
+      setPostPdaAccountList
     }),
-    [selectedNft, nftConfigPdaAccount, postPdaAddressList, postPdaAccountList]
+    [selectedNft, nftConfigPdaAccount, postPdaAddressList, postPdaAccountList, setPostPdaAddressList, setRawPostPdaAccountList, setPostPdaAccountList]
   );
 
   return <NftAccountContext.Provider value={value}>{children}</NftAccountContext.Provider>;

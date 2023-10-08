@@ -386,7 +386,7 @@ export const sendTweet = async (workspace: any, nftMintAddress: PublicKey, conte
         
       const account = {user: nftMintAddress, timestamp: Date.now(), state: null, tag: "", content: content}
       const tweet = new Tweet(nftMintAddress, account)
-      return { tweet: tweet, message: "Your tweet was sent successfully!", };
+      return {postPdaAddress:postPda[0], tweet: tweet, message: "Your tweet was sent successfully!", };
     } catch (error: any) {
       console.log(error);
       return error;
