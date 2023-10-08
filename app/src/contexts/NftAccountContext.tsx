@@ -20,6 +20,7 @@ export type postPdaAccount = {
   likeNum: BN;
   nftAddress: PublicKey;
   reviewNum: BN;
+  timeStamp: BN
 };
 
 interface NftAccountState {
@@ -36,6 +37,7 @@ export function NftAccountProvidr({ children }: { children: ReactNode }) {
   const [selectedNft, setSelectedNft] = useState<nftInfo>(null!);
   const [nftConfigPdaAccount, setNftConfigPdaAccount] = useState<nftConfigPdaAccount>(null!);
   const [postPdaAddressList, setPostPdaAddressList] = useState<PublicKey[]>([]);
+  const [rawPostPdaAccountList, setRawPostPdaAccountList] = useState<postPdaAccount[]>([]);
   const [postPdaAccountList, setPostPdaAccountList] = useState<postPdaAccount[]>([]);
 
   useEffect(() => {
@@ -69,13 +71,23 @@ export function NftAccountProvidr({ children }: { children: ReactNode }) {
     if (postPdaAddressList && workspace) {
       postPdaAddressList.forEach((pdaAddress) => {
         workspace.program.account.postPda.fetch(pdaAddress).then((postPdaAccount) => {
-          setPostPdaAccountList((prev) => [...prev, postPdaAccount]);
+          setRawPostPdaAccountList((prev) => [...prev, postPdaAccount]);
         });
       });
     }
   }, [postPdaAddressList]);
 
-  console.log(postPdaAccountList)
+  useEffect(() => {
+    if(workspace && rawPostPdaAccountList) {
+      let sortByTimestamp = rawPostPdaAccountList.sort((x, y) => {
+        return x.timeStamp.toNumber()-y.timeStamp.toNumber()
+      })
+      setPostPdaAccountList(sortByTimestamp.reverse())
+    }
+  },[rawPostPdaAccountList])
+
+
+  // console.log(sortByTimestamp.reverse())
 
   const value = useMemo(
     () => ({

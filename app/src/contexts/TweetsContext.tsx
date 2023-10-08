@@ -53,7 +53,7 @@ export function TweetsProvider({ children }: { children: ReactNode }) {
     }
   }, [pagination]);
 
-  // need to be fix
+
   useEffect(() => {
     setRecentTweets(tweets.slice(0, 5));
   }, [tweets]);
@@ -74,7 +74,6 @@ export function TweetsProvider({ children }: { children: ReactNode }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [workspace, NftAccount]
   );
-  console.log(tweets)
   // const _updateTweet = useCallback(
   //   async (tweet: Tweet, tag: string, content: string) => {
   //     if (workspace) {

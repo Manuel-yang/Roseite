@@ -55,8 +55,6 @@ export default function Tweets() {
           <TweetForm />
           {workspace ? (
             <div className="space-y-4">
-              {/* {selectedNftId !== undefined && JSON.stringify(nftsList[selectedNftId])} */}
-              {/* {JSON.stringify(postPdaAccountList)} */}
               {postPdaAccountList.map((tweet, index) => (
                 <UserTweetCard
                   key={index}
