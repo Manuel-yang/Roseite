@@ -56,7 +56,7 @@ Roseite was born thanks to Solana's unique Pda model. Posts in Roseite will real
 
 
 
-## 潜力：
+## Potential：
 
 - Because of the transparency of web3, user profiling can be better achieved.
 - Using Solana's Lookup table feature, users can store up to 255 * 3MB = 756MB of content on the chain at most.
