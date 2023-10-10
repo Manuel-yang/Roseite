@@ -37,9 +37,9 @@ export default function Sidebar() {
                     </a>
                   </Link>
                 </div>
-                <h1 className="mb-0 text-2xl font-semibold text-color-primary">Solana X - NFT</h1>
-                <p className="text-xs italic text-color-secondary">Solana communication platform</p>
-                <p className="text-xs italic text-color-secondary">Generate your own Moment NFT </p>
+                <h1 className="mb-0 text-2xl font-semibold text-color-primary">Roseite</h1>
+                <p className="text-xs italic text-color-secondary">Earn by chatting!</p>
+                {/* <p className="text-xs italic text-color-secondary">Generate your own Moment NFT </p> */}
               </div>
             </div>
           </div>
