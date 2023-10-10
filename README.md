@@ -10,13 +10,13 @@ It's worth noting that the core of this project lies in the implementation of th
 
 
 
-1. ## Advantages:
+## Advantages:
 
-   1. Greater degree of decentralization: Ownership of the NFT account equates to the possession of all associated properties, including all posts and other potential earnings.
-   2. Improved incentivization mechanism: Users can tip high-quality post PDAs directly and the NFT holders attached to these posts can directly claim the profits from the post PDAs — establishing a positive cycle of high-quality content and profits.
-   3. Enhanced value of NFTs: The value of NFTs will not be speculative, rather, they will be determined by NFT holders who are able to attract followers by creating engaging content and generating more profitable posts, to elevate traffic for their NFT account. Additionally, these NFTs can be listed for sale in mainstream NFT marketplaces, such as Magic Edgn.
-   4. Superior protocol: Leveraging the design of the NFT accounts, we will enact a protocol on Solana that resembles ERC-6551 to facilitate the holding of multiple subsidiary NFTs under primary NFTs. When the ownership of the parent NFT changes, the same happens to the child NFTs, but child NFTs can also be independently transferred.
-   5. Better content filtration mechanism: Given Solana's unique modeling mechanism, we hope to encourage high-quality content and minimize irrelevant posts by regulating post PDA rents; ensuring a healthy balance within Roseite.
+  1. Greater degree of decentralization: Ownership of the NFT account equates to the possession of all associated properties, including all posts and other potential earnings.
+  2. Improved incentivization mechanism: Users can tip high-quality post PDAs directly and the NFT holders attached to these posts can directly claim the profits from the post PDAs — establishing a positive cycle of high-quality content and profits.
+  3. Enhanced value of NFTs: The value of NFTs will not be speculative, rather, they will be determined by NFT holders who are able to attract followers by creating engaging content and generating more profitable posts, to elevate traffic for their NFT account. Additionally, these NFTs can be listed for sale in mainstream NFT marketplaces, such as Magic Edgn.
+  4. Superior protocol: Leveraging the design of the NFT accounts, we will enact a protocol on Solana that resembles ERC-6551 to facilitate the holding of multiple subsidiary NFTs under primary NFTs. When the ownership of the parent NFT changes, the same happens to the child NFTs, but child NFTs can also be independently transferred.
+  5. Better content filtration mechanism: Given Solana's unique modeling mechanism, we hope to encourage high-quality content and minimize irrelevant posts by regulating post PDA rents; ensuring a healthy balance within Roseite.
 
 
 
