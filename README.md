@@ -26,17 +26,22 @@ It's worth noting that the core of this project lies in the implementation of th
 
 ## Structure
 
-- app--Roseite frontend
-- programs
-  - src
-    - instructions--main functions' instructions
-      - admin--admin management system instructions
-    - state--account struct
-    - errors.rs
-    - lib.rs program interface
-  - targe-- compiling file
-  - tests--testing
-  - utils
+├── app -- Roseite frontend
+│   ├── public
+│   └── src
+├── images
+├── migrations
+├── programs
+│   └── nft_social_media -- Solana program
+├── target -- compiling file
+│   ├── bpfel-unknown-unknown
+│   ├── debug
+│   ├── deploy
+│   ├── idl
+│   ├── release
+│   └── types
+├── tests
+└── utils -- testing
 
 
 
