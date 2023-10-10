@@ -25,7 +25,7 @@ It's worth noting that the core of this project lies in the implementation of th
 
 
 ## Structure
-
+```
 ├── app -- Roseite frontend
 │   ├── public
 │   └── src
@@ -42,7 +42,7 @@ It's worth noting that the core of this project lies in the implementation of th
 │   └── types
 ├── tests
 └── utils -- testing
-
+```
 
 
 ## Dynamically add mint whitelist
