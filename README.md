@@ -4,12 +4,12 @@
 
 <h3 align="center">Roseite</h3>
 
-<p align="center">
-   A Fully On-Chain Social Platform
+<div align="center">
+  <h3> A Fully On-Chain Social Platform</h3>
   <br>
   <a href="https://github.com/BTHDMS/solana6551"><strong>Solana-6551 protocol(tentative) »</strong></a>
   <br>
-</p>
+</div>
 
 <p align="center">
    <img alt="Solana" src="https://i.imgur.com/IKyzQ6T.png" width="250" />
