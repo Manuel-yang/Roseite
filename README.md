@@ -107,12 +107,12 @@ Roseite was born thanks to Solana's unique Pda model. Posts in Roseite will real
 
 
 
-## Roadmap
+## Potential
 
-- [ ] Because of the transparency of web3, user profiling can be better achieved.
-- [ ] Using Solana's Lookup table feature, users can store up to 255 * 3MB = 756MB of content on the chain at most.
-- [ ] According to the unique model of Solana, the extension of the ERC-6551-like protocol makes the gameplay more diverse.
-- [ ] Applying this set of product models and protocols to the GameFi field is aimed at subverting the existing gameplay of GameFi and NFTs.
+- Because of the transparency of web3, user profiling can be better achieved.
+- Using Solana's Lookup table feature, users can store up to 255 * 3MB = 756MB of content on the chain at most.
+- According to the unique model of Solana, the extension of the ERC-6551-like protocol makes the gameplay more diverse.
+- Applying this set of product models and protocols to the GameFi field is aimed at subverting the existing gameplay of GameFi and NFTs.
 
 
 
