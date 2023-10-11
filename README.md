@@ -1,3 +1,47 @@
+<div align="center">
+  <img src="./images/logo.jpg" width="150px">
+</div>
+
+<h3 align="center">Roseite</h3>
+
+<p align="center">
+   A Fully On-Chain Social Platform
+  <br>
+  <br>
+</p>
+
+<p align="center">
+   <img alt="Solana" src="https://i.imgur.com/IKyzQ6T.png" width="250" />
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" width="120px" height="28px" alt="reacr" />
+</p>
+
+## Table of Contents
+- [Table of Contents](#table-of-contents)
+- [Introduce](#introduce)
+- [Main Features](#main-features)
+- [SocialFi](#socialFi)
+  - [Structure](#structure)
+  - [Dynamically add mint whitelist](#dynamically-add-mint-whitelist)
+  - [Post Pda](#post-pda)
+- [Potential](#potential)
+- [Program](#program)
+  - [Building](#building)
+  - [Deploying](#deploying)
+  - [Testing](#testing)
+- [Frontend](#frontend)
+  - [Installing](#installing)
+  - [Run](#run)
+  
+
+
+
+  
+ 
+
+
 # Introduce
 
 **Roseite** is a fully on-chain SocialFi platform. Importantly, we will use NFTs as a social account instead of a wallet account, achieving greater decentralization while enhancing the practical value of NFTs.
@@ -10,7 +54,7 @@ It's worth noting that the core of this project lies in the implementation of th
 
 
 
-## Advantages:
+## Main Features:
 
   1. Greater degree of decentralization: Ownership of the NFT account equates to the possession of all associated properties, including all posts and other potential earnings.
   2. Improved incentivization mechanism: Users can tip high-quality post PDAs directly and the NFT holders attached to these posts can directly claim the profits from the post PDAs — establishing a positive cycle of high-quality content and profits.
@@ -57,7 +101,7 @@ Nfts in Roseite complies with the Metaplex nft standard, and is used with candy 
 
 Roseite was born thanks to Solana's unique Pda model. Posts in Roseite will realize full data on-chain through pda. At the same time, when the ownership of Nft is transferred, new holders will have all post pda under their Nft to achieve the purpose of increasing the value of Nft.
 
-![未命名文件](./images/post.png)
+![post](./images/post.png)
 
 
 
