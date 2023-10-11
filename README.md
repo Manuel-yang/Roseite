@@ -44,7 +44,7 @@
 
 # Introduce
 
-**Roseite** is a fully on-chain SocialFi platform. Importantly, we will use NFTs as a social account instead of a wallet account, achieving greater decentralization while enhancing the practical value of NFTs.
+**Roseite** is a fully Solana on-chain SocialFi platform. Importantly, we will use NFTs as a social account instead of a wallet account, achieving greater decentralization while enhancing the practical value of NFTs.
 
 Additionally, due to the unique product model of Roseite, we propose a protocol resembling ERC-6551 to unlock more playstyles and increase the true use value of NFTs.
 
@@ -54,13 +54,14 @@ It's worth noting that the core of this project lies in the implementation of th
 
 
 
-## Main Features:
+## Advantages
 
-  1. Greater degree of decentralization: Ownership of the NFT account equates to the possession of all associated properties, including all posts and other potential earnings.
-  2. Improved incentivization mechanism: Users can tip high-quality post PDAs directly and the NFT holders attached to these posts can directly claim the profits from the post PDAs — establishing a positive cycle of high-quality content and profits.
-  3. Enhanced value of NFTs: The value of NFTs will not be speculative, rather, they will be determined by NFT holders who are able to attract followers by creating engaging content and generating more profitable posts, to elevate traffic for their NFT account. Additionally, these NFTs can be listed for sale in mainstream NFT marketplaces, such as Magic Edgn.
-  4. Superior protocol: Leveraging the design of the NFT accounts, we will enact a protocol on Solana that resembles ERC-6551 to facilitate the holding of multiple subsidiary NFTs under primary NFTs. When the ownership of the parent NFT changes, the same happens to the child NFTs, but child NFTs can also be independently transferred.
-  5. Better content filtration mechanism: Given Solana's unique modeling mechanism, we hope to encourage high-quality content and minimize irrelevant posts by regulating post PDA rents; ensuring a healthy balance within Roseite.
+1. **Greater decentralization:** Owning the NFT account means possessing all associated properties, including posts and potential earnings.
+2. **Improved incentivization mechanism:** Users can directly tip high-quality post PDAs, allowing NFT holders attached to those posts to claim the profits. This establishes a positive cycle of high-quality content and profits.
+3. **Enhanced value of NFTs:** The value of NFTs will be determined by NFT holders who attract followers through engaging content and generate profitable posts, thus increasing traffic to their NFT accounts. Additionally, these NFTs can be listed for sale on mainstream NFT marketplaces like Magic Edgn.
+4. **Superior protocol:** Utilizing the design of NFT accounts, a Solana-based protocol similar to ERC-6551 will enable the holding of multiple subsidiary NFTs under primary NFTs. Ownership changes in the parent NFT will reflect in the child NFTs, but child NFTs can also be transferred independently.
+5. **Improved content filtration mechanism:** Leveraging Solana's unique modeling mechanism, we aim to promote high-quality content and minimize irrelevant posts by regulating post PDA rents, ensuring a healthy balance within Roseite.
+
 
 
 
@@ -88,8 +89,9 @@ It's worth noting that the core of this project lies in the implementation of th
 └── utils -- testing
 ```
 
+## Main Features
 
-## Dynamically add mint whitelist
+### Dynamically add mint whitelist
 
 Nfts in Roseite complies with the Metaplex nft standard, and is used with candy guard to dynamically add mint whitelist.
 
@@ -97,7 +99,7 @@ Nfts in Roseite complies with the Metaplex nft standard, and is used with candy 
 
 
 
-## Post Pda
+### Post Pda
 
 Roseite was born thanks to Solana's unique Pda model. Posts in Roseite will realize full data on-chain through pda. At the same time, when the ownership of Nft is transferred, new holders will have all post pda under their Nft to achieve the purpose of increasing the value of Nft.
 
@@ -105,12 +107,12 @@ Roseite was born thanks to Solana's unique Pda model. Posts in Roseite will real
 
 
 
-## Potential：
+## Roadmap
 
-- Because of the transparency of web3, user profiling can be better achieved.
-- Using Solana's Lookup table feature, users can store up to 255 * 3MB = 756MB of content on the chain at most.
-- According to the unique model of Solana, the extension of the ERC-6551-like protocol makes the gameplay more diverse.
-- Applying this set of product models and protocols to the gamefi field is aimed at subverting the existing gameplay of gamefi and NFTs.
+- [ ] Because of the transparency of web3, user profiling can be better achieved.
+- [ ] Using Solana's Lookup table feature, users can store up to 255 * 3MB = 756MB of content on the chain at most.
+- [ ] According to the unique model of Solana, the extension of the ERC-6551-like protocol makes the gameplay more diverse.
+- [ ] Applying this set of product models and protocols to the GameFi field is aimed at subverting the existing gameplay of GameFi and NFTs.
 
 
 
