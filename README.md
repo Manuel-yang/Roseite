@@ -20,28 +20,27 @@
 </p>
 
 ## Table of Contents
-- [Table of Contents](#table-of-contents)
+
 - [Introduce](#introduce)
-- [Main Features](#main-features)
-- [SocialFi](#socialFi)
+  - [Advantages](#advantages)
+- [SocialFi](#socialfi)
   - [Structure](#structure)
-  - [Dynamically add mint whitelist](#dynamically-add-mint-whitelist)
-  - [Post Pda](#post-pda)
-- [Potential](#potential)
+  - [Main Features](#main-features)
+    - [Dynamically add mint whitelist](#dynamically-add-mint-whitelist)
+    - [Post Pda](#post-pda)
+  - [Use Case](#use-case)
+    - [Choose NFT Account](#choose-nft-account)
+    - [Tweet](#tweet)
+    - [Like and Comment](#like-and-comment)
+  - [Potential](#potential)
 - [Program](#program)
-  - [Building](#building)
-  - [Deploying](#deploying)
-  - [Testing](#testing)
-- [Frontend](#frontend)
-  - [Installing](#installing)
-  - [Run](#run)
-  
-
-
-
-  
- 
-
+  - [Smart Contract](#smart-contract)
+    - [Building](#building)
+    - [Deploying](#deploying)
+    - [Testing](#testing)
+  - [Frontend](#frontend)
+    - [Installing](#installing)
+    - [Run](#run)
 
 # Introduce
 
@@ -53,8 +52,6 @@ It's worth noting that the core of this project lies in the implementation of th
 
 <u>This project made a breakthrough from 0 to 1 during the Solana hackathon and will need more time to realize our ideas</u>.
 
-
-
 ## Advantages
 
 1. **Greater decentralization:** Owning the NFT account means possessing all associated properties, including posts and potential earnings.
@@ -63,14 +60,10 @@ It's worth noting that the core of this project lies in the implementation of th
 4. **Superior protocol:** Utilizing the design of NFT accounts,[Solana-6551 protocol](https://github.com/BTHDMS/solana6551) will enable the holding of multiple subsidiary NFTs under primary NFTs. Ownership changes in the parent NFT will reflect in the child NFTs, but child NFTs can also be transferred independently.
 5. **Improved content filtration mechanism:** Leveraging Solana's unique modeling mechanism, we aim to promote high-quality content and minimize irrelevant posts by regulating post PDA rents, ensuring a healthy balance within Roseite.
 
-
-
-
 # SocialFi
 
-
-
 ## Structure
+
 ```
 ├── app -- Roseite frontend
 │   ├── public
@@ -78,7 +71,7 @@ It's worth noting that the core of this project lies in the implementation of th
 ├── images
 ├── migrations
 ├── programs
-│   └── nft_social_media -- Solana program
+│   └── NFT_social_media -- Solana program
 ├── target -- compiling file
 │   ├── bpfel-unknown-unknown
 │   ├── debug
@@ -94,32 +87,42 @@ It's worth noting that the core of this project lies in the implementation of th
 
 ### Dynamically add mint whitelist
 
-Nfts in Roseite complies with the Metaplex nft standard, and is used with candy guard to dynamically add mint whitelist.
+NFTs in Roseite complies with the Metaplex NFT standard, and is used with candy guard to dynamically add mint whitelist.
 
 ![image-20231010155818315](./images/image-20231010155818315.png)
 
-
-
 ### Post Pda
 
-Roseite was born thanks to Solana's unique Pda model. Posts in Roseite will realize full data on-chain through pda. At the same time, when the ownership of Nft is transferred, new holders will have all post pda under their Nft to achieve the purpose of increasing the value of Nft.
+Roseite was born thanks to Solana's unique Pda model. Posts in Roseite will realize full data on-chain through pda. At the same time, when the ownership of NFT is transferred, new holders will have all post pda under their NFT to achieve the purpose of increasing the value of NFT.
 
 ![post](./images/post.png)
 
+## Use Case
 
+### Choose NFT Account
+
+The "Choose NFT Account" feature allows users to select an NFT account from their wallet. This feature is unique to Roseite and sets it apart from other SocialFi platforms. By allowing users to manage multiple accounts, it provides convenience for future transactions.
+
+### Tweet
+
+The "Tweet" feature is similar to posting on Twitter. Users can send text and tag content on Roseite. It enables users to share their thoughts, ideas, or updates with the Roseite community.
+
+### Like and Comment
+
+The "Like and Comment" feature serves as a form of affirmation for creators' content. The more likes and comments a post receives, the higher its perceived value and price. These interactions contribute to the account's assets and can be traded in the future.
 
 ## Potential
 
 - Because of the transparency of web3, user profiling can be better achieved.
-- Using Solana's Lookup table feature, users can store up to 255 * 3MB = 756MB of content on the chain at most.
+- Using Solana's Lookup table feature, users can store up to 255 \* 3MB = 756MB of content on the chain at most.
 - According to the unique model of Solana, the extension of the [Solana-6551 protocol](https://github.com/BTHDMS/solana6551) makes the gameplay more diverse.
 - Applying this set of product models and protocols to the GameFi field is aimed at subverting the existing gameplay of GameFi and NFTs.
 
-
-
 # Program
 
-## Building
+## Smart Contract
+
+### Building
 
 **note:Please make sure the environment contains anchor, solana-cli, rustc before running this project**
 
@@ -129,9 +132,7 @@ anchor build
 
 After running the command, the target file will be generated in the root directory
 
-
-
-## Deploying
+### Deploying
 
 ```
 anchor deploy
@@ -139,9 +140,7 @@ anchor deploy
 
 According to the Anchor.toml configuration file, deploy the contract to the chain through solana-cli
 
-
-
-## Testing
+### Testing
 
 ```
 anchor test
@@ -149,25 +148,21 @@ anchor test
 
 Testing
 
-
-
 ## Frontend
 
 ### Installing
 
 ```
 cd app
-npm install
+yarn
 ```
 
 Install dependencies
 
-
-
-## Run
+### Run
 
 ```
-npm run dev
+yarn dev
 ```
 
 start frontend
