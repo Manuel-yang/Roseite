@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Button, Modal } from "flowbite-react";
 import { useWallet } from "@solana/wallet-adapter-react";
 import RecentTweets from "../../components/RecentTweets";
 import TweetForm from "../../components/TweetForm";
@@ -35,7 +34,7 @@ export default function Tweets() {
   return (
     <Base>
       <div className="flex w-full">
-        <div className="mr-16 grow" style={{ position: "relative" }}>
+        <div className="mr-16 grow w-3/4" style={{ position: "relative" }}>
           <div className="mb-8 flex space-x-6 whitespace-nowrap border-b border-skin-primary">
             <h2 className="-mb-px flex border-b-2 border-sky-500 pb-2.5 font-semibold leading-6 text-color-primary">
               Tweets
@@ -54,13 +53,7 @@ export default function Tweets() {
           {workspace ? (
             <div className="space-y-4">
               {postPdaAccountList.map((tweet, index) => (
-                <UserTweetCard
-                  key={index}
-                  tweet={tweet}
-                  onDelete={() => {
-                    console.log("delete");
-                  }}
-                />
+                <UserTweetCard key={index} tweet={tweet} />
               ))}
               {/* <TweetList
                 tweets={tweets}

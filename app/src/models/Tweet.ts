@@ -22,11 +22,13 @@ export class UserTweet {
   content: string;
   reviewNum: BN;
   likeNum: BN;
-  constructor(nftAddress: PublicKey, content: string, reviewNum: BN, likeNum: BN) {
+  timeStamp: BN;
+  constructor(nftAddress: PublicKey, content: string, reviewNum: BN, likeNum: BN, timeStamp: BN) {
     this.nftAddress = nftAddress;
     this.content = content;
     this.reviewNum = reviewNum;
     this.likeNum = likeNum;
+    this.timeStamp = timeStamp;
   }
 }
 

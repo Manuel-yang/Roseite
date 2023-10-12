@@ -4,17 +4,18 @@ import { FaRegComment, FaHeart, FaTrash } from "react-icons/fa";
 import useTheme from "../hooks/useTheme";
 import useNftScanner from "../hooks/useNftScanner";
 import CopyToClipboardButton from "./CopyButton";
+import { bnToData } from "../utils";
 
-export default function UserTweetCard({ tweet, onDelete }: { tweet: UserTweet; onDelete: (t: UserTweet) => void }) {
+export default function UserTweetCard({ tweet }: { tweet: UserTweet }) {
   const { theme } = useTheme();
   const { nftsList, selectedNftId } = useNftScanner();
 
   return (
-    <div className={`rounded-lg shadow-md p-4 ${theme === "dark" ? "dark" : ""}`}>
+    <div className={`card py-4 px-8 ${theme === "dark" ? "dark" : ""}`}>
       <div className="flex items-center mb-4">
         {selectedNftId !== undefined ? (
           <img
-            className="w-10 h-11 rounded-full mr-2"
+            className="w-10 h-11 rounded-full mr-4"
             src={nftsList[selectedNftId]?.data.metadata.image}
             alt={nftsList[selectedNftId]?.data.name}
           />
@@ -24,8 +25,9 @@ export default function UserTweetCard({ tweet, onDelete }: { tweet: UserTweet; o
         <p className="text-gray-500 mr-3">{tweet.nftAddress.toString()}</p>
         <CopyToClipboardButton textToCopy={tweet.nftAddress.toString()} />
       </div>
-      <h2 className={`text-lg font-bold mb-4 ${theme === "dark" ? "text-white" : ""}`}>{tweet.content}</h2>
-      <div className="flex space-x-32 items-center">
+      <p className={`text-lg mb-4 ${theme === "dark" ? "text-white" : ""}`}>{tweet.content}</p>
+      <p className="text-gray-500">{bnToData(tweet.timeStamp)}</p>
+      <div className="flex space-x-32 items-center mb-2">
         <div className="flex items-center">
           <FaRegComment className="text-gray-500 mr-1" />
           <span className="text-gray-500">{tweet.reviewNum.toString()} Reviews</span>

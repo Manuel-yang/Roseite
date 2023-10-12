@@ -20,7 +20,7 @@ export type postPdaAccount = {
   likeNum: BN;
   nftAddress: PublicKey;
   reviewNum: BN;
-  timeStamp: BN
+  timeStamp: BN;
 };
 
 interface NftAccountState {
@@ -30,8 +30,8 @@ interface NftAccountState {
   rawPostPdaAccountList: postPdaAccount[];
   postPdaAccountList: postPdaAccount[];
   setPostPdaAddressList: React.Dispatch<React.SetStateAction<PublicKey[]>>;
-  setRawPostPdaAccountList:(postPdaAddressList: postPdaAccount[]) => void;
-  setPostPdaAccountList:(postPdaAddressList: postPdaAccount[]) => void;
+  setRawPostPdaAccountList: (postPdaAddressList: postPdaAccount[]) => void;
+  setPostPdaAccountList: (postPdaAddressList: postPdaAccount[]) => void;
 }
 
 const NftAccountContext = createContext<NftAccountState>(null!);
@@ -74,7 +74,7 @@ export function NftAccountProvidr({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (postPdaAddressList && workspace) {
       // init data
-      if(nftConfigPdaAccount.postsNum.toNumber() == postPdaAddressList.length) {
+      if (nftConfigPdaAccount.postsNum.toNumber() == postPdaAddressList.length) {
         postPdaAddressList.forEach((pdaAddress) => {
           workspace.program.account.postPda.fetch(pdaAddress).then((postPdaAccount) => {
             setRawPostPdaAccountList((prev) => [...prev, postPdaAccount]);
@@ -82,24 +82,24 @@ export function NftAccountProvidr({ children }: { children: ReactNode }) {
         });
       }
       // add new tweet after tweeting
-      if(rawPostPdaAccountList.length == postPdaAddressList.length-1) {
-        workspace.program.account.postPda.fetch(postPdaAddressList[postPdaAddressList.length-1]).then((postPdaAccount) => {
-          setRawPostPdaAccountList((prev) => [...prev, postPdaAccount]);
-        });
+      if (rawPostPdaAccountList.length == postPdaAddressList.length - 1) {
+        workspace.program.account.postPda
+          .fetch(postPdaAddressList[postPdaAddressList.length - 1])
+          .then((postPdaAccount) => {
+            setRawPostPdaAccountList((prev) => [...prev, postPdaAccount]);
+          });
       }
     }
   }, [postPdaAddressList]);
 
   useEffect(() => {
-    if(workspace && rawPostPdaAccountList) {
+    if (workspace && rawPostPdaAccountList) {
       let sortByTimestamp = rawPostPdaAccountList.sort((x, y) => {
-        return x.timeStamp.toNumber()-y.timeStamp.toNumber()
-      })
-      setPostPdaAccountList(sortByTimestamp.reverse())
+        return x.timeStamp.toNumber() - y.timeStamp.toNumber();
+      });
+      setPostPdaAccountList(sortByTimestamp.reverse());
     }
-  },[rawPostPdaAccountList])
-
-  console.log(postPdaAddressList)
+  }, [rawPostPdaAccountList]);
 
   const value = useMemo(
     () => ({
@@ -110,9 +110,17 @@ export function NftAccountProvidr({ children }: { children: ReactNode }) {
       postPdaAccountList,
       setPostPdaAddressList,
       setRawPostPdaAccountList,
-      setPostPdaAccountList
+      setPostPdaAccountList,
     }),
-    [selectedNft, nftConfigPdaAccount, postPdaAddressList, postPdaAccountList, setPostPdaAddressList, setRawPostPdaAccountList, setPostPdaAccountList]
+    [
+      selectedNft,
+      nftConfigPdaAccount,
+      postPdaAddressList,
+      postPdaAccountList,
+      setPostPdaAddressList,
+      setRawPostPdaAccountList,
+      setPostPdaAccountList,
+    ]
   );
 
   return <NftAccountContext.Provider value={value}>{children}</NftAccountContext.Provider>;
