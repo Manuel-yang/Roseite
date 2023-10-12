@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useWallet } from "@solana/wallet-adapter-react";
@@ -13,8 +12,6 @@ import {
   HiUserGroup,
   HiOutlineUserGroup,
 } from "react-icons/hi";
-import { FaGithub } from "react-icons/fa";
-import { Tooltip } from "flowbite-react";
 import useTheme from "../hooks/useTheme";
 
 export default function Sidebar() {
@@ -27,19 +24,15 @@ export default function Sidebar() {
       <div className="h-full overflow-y-auto border-r border-skin-primary">
         <div className="relative mb-8">
           <div className="relative overflow-hidden">
-            <div className="glass absolute left-[2.5%] z-0 h-72 w-full scale-x-105 opacity-30"></div>
-            <div className="flex h-72 items-center justify-center">
+            <div className="glass absolute left-[2.5%] z-0 h-80 w-full scale-x-105 opacity-30"></div>
+            <div className="flex h-80 items-center justify-center">
               <div className="mb-6 select-none text-center">
-                <div className="mx-auto mb-4">
-                  <Link href="/">
-                    <a className="inline-block p-3 hover:bg-fill-third md:self-start rounded-full">
-                      <Image src="/chat.png" width={50} height={50} alt="logo" />
-                    </a>
-                  </Link>
+                <div className="inline-block w-32 h-32 rounded-full overflow-hidden">
+                  <img src="/logo.jpg" alt="logo" className="object-cover w-full h-full" />
                 </div>
-                <h1 className="mb-0 text-2xl font-semibold text-color-primary">Roseite</h1>
-                <p className="text-xs italic text-color-secondary">Earn by chatting!</p>
-                {/* <p className="text-xs italic text-color-secondary">Generate your own Moment NFT </p> */}
+                <h1 className="mb-0 text-2xl font-semibold text-color-primary">ROSEITE</h1>
+                <p className="text-xs italic text-color-secondary">Solana communication platform</p>
+                <p className="text-xs italic text-color-secondary">Chat to earn! </p>
               </div>
             </div>
           </div>
@@ -98,15 +91,6 @@ export default function Sidebar() {
               </a>
             </Link>
           )}
-        </div>
-        <div className="absolute bottom-4 left-6">
-          <Tooltip content="View on GitHub" style={theme}>
-            <Link href="https://github.com/curest0x1021/SolanaTwitter">
-              <a target="_blank" rel="noopener noreferrer">
-                <FaGithub size={24} className="text-color-third hover:text-color-primary" />
-              </a>
-            </Link>
-          </Tooltip>
         </div>
       </div>
     </aside>

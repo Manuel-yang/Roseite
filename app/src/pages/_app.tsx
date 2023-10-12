@@ -21,11 +21,8 @@ function MyApp({ Component, pageProps }: AppProps) {
     <AppContext>
       <>
         <Head>
-          <title>Solana Twitter</title>
-          <meta
-            name="viewport"
-            content="initial-scale=1.0, width=device-width"
-          />
+          <title>Roseite</title>
+          <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         </Head>
         <Component {...pageProps} />
         <ToastContainer />
