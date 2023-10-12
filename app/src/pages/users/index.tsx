@@ -6,28 +6,28 @@ import UserList from "../../components/UserList";
 import Base from "../../templates/Base";
 import TweetSearch from "../../components/TweetSearch";
 import RecentUsers from "../../components/RecentUsers";
-import useUsers from "../../hooks/useUsers";
+// import useUsers from "../../hooks/useUsers";
 
 export default function Users() {
   const router = useRouter();
   const [user, setUser] = useState("");
   const [filterUsers, setFilterUsers] = useState<UserType[]>([]);
 
-  const { users, recentUsers, loading } = useUsers();
+  // const { users, recentUsers, loading } = useUsers();
 
   const search = (str: string) => {
     router.push(`/users/${str}`);
   };
 
-  const onTextChange = (text: string) => {
-    const fUsers = users.filter((k) => k.user.toBase58().includes(text));
-    setUser(text);
-    setFilterUsers(fUsers);
-  };
+  // const onTextChange = (text: string) => {
+  //   const fUsers = users.filter((k) => k.user.toBase58().includes(text));
+  //   setUser(text);
+  //   setFilterUsers(fUsers);
+  // };
 
-  useEffect(() => {
-    setFilterUsers(users);
-  }, [users]);
+  // useEffect(() => {
+  //   setFilterUsers(users);
+  // }, [users]);
 
   return (
     <Base>
@@ -42,19 +42,17 @@ export default function Users() {
             placeholder="user public key"
             disabled={!user}
             modelValue={user}
-            setModelValue={onTextChange}
+            // setModelValue={onTextChange}
             search={search}
           >
             <HiOutlineKey size={20} className="text-color-third" />
           </TweetSearch>
-          <UserList users={filterUsers} loading={loading} />
+          {/* <UserList users={filterUsers} loading={loading} /> */}
         </div>
         <div className="relative mb-8 w-72">
           <div className="duration-400 fixed h-full w-72 pb-44 transition-all">
-            <h3 className="mb-4 pb-2.5 font-semibold leading-6 text-color-primary">
-              Recent Users
-            </h3>
-            <RecentUsers users={recentUsers} />
+            <h3 className="mb-4 pb-2.5 font-semibold leading-6 text-color-primary">Recent Users</h3>
+            {/* <RecentUsers users={recentUsers} /> */}
           </div>
         </div>
       </div>

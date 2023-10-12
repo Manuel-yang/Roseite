@@ -9,6 +9,7 @@ import { useSlug } from "../hooks/useSlug";
 import useTheme from "../hooks/useTheme";
 import useTweets from "../hooks/useTweets";
 import { notifyLoading, notifyUpdate } from "../utils";
+import JSConfetti from "js-confetti";
 
 type FormValues = {
   content: string;
@@ -16,6 +17,7 @@ type FormValues = {
 };
 
 export default function TweetForm({ forceTag }: { forceTag?: string }) {
+  const jsConfetti = new JSConfetti();
   const { sendTweet } = useTweets();
   const { connected } = useWallet();
   const { theme } = useTheme();
@@ -30,8 +32,7 @@ export default function TweetForm({ forceTag }: { forceTag?: string }) {
   // Character limit / count-down
   const characterLimit = useCountCharacterLimit(watch("content"));
   let characterLimitColor = "text-color-third";
-  if (CONTENT_LIMIT - characterLimit <= 10)
-    characterLimitColor = "text-yellow-500";
+  if (CONTENT_LIMIT - characterLimit <= 10) characterLimitColor = "text-yellow-500";
   if (CONTENT_LIMIT - characterLimit < 0) characterLimitColor = "text-red-500";
 
   // Permissions
@@ -40,11 +41,12 @@ export default function TweetForm({ forceTag }: { forceTag?: string }) {
   // Actions
   const send = async (data: FormValues) => {
     if (!canTweet) return;
-    const toastId = notifyLoading(
-      "Transaction in progress. Please wait...",
-      theme
-    );
+    const toastId = notifyLoading("Transaction in progress. Please wait...", theme);
     // console.log(data)
+    jsConfetti.addConfetti({
+      emojiSize: 20,
+      confettiNumber: 120,
+    });
     const result = await sendTweet(effectiveTag, data.content);
     notifyUpdate(toastId, result.message, result.tweet ? "success" : "error");
 
@@ -57,10 +59,7 @@ export default function TweetForm({ forceTag }: { forceTag?: string }) {
   return (
     <>
       {connected ? (
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="border-b border-skin-primary px-8 py-4"
-        >
+        <form onSubmit={handleSubmit(onSubmit)} className="mb-8 border-b border-skin-primary px-8 py-4">
           {/* <!-- Content field. --> */}
           <TextareaAutosize
             {...register("content", {
@@ -88,10 +87,7 @@ export default function TweetForm({ forceTag }: { forceTag?: string }) {
               <div className="absolute inset-y-0 left-0 flex pl-3 pr-2">
                 <HiHashtag
                   size={20}
-                  className={
-                    (effectiveTag ? "text-primary-500 " : "text-color-third ") +
-                    "m-auto"
-                  }
+                  className={(effectiveTag ? "text-primary-500 " : "text-color-third ") + "m-auto"}
                 />
               </div>
             </div>
@@ -105,9 +101,7 @@ export default function TweetForm({ forceTag }: { forceTag?: string }) {
               <button
                 disabled={!canTweet}
                 className={
-                  (canTweet
-                    ? "bg-primary-500 "
-                    : "bg-primary-300/80 cursor-not-allowed ") +
+                  (canTweet ? "bg-primary-500 " : "bg-primary-300/80 cursor-not-allowed ") +
                   "rounded-full px-4 py-2 font-semibold text-white"
                 }
                 type="submit"

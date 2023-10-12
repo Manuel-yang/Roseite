@@ -1,23 +1,23 @@
 import { useEffect } from "react";
 import TweetForm from "../../components/TweetForm";
-import TweetList from "../../components/TweetList";
-import useTweets from "../../hooks/useTweets";
 import useWorkspace from "../../hooks/useWorkspace";
 import Base from "../../templates/Base";
-import { userFilter } from "../api/tweets";
+import UserTweetCard from "../../components/UserTweetCard";
+import useNftAccount from "../../hooks/useNftAccount";
+// import { userFilter } from "../api/tweets";
 
 export default function Profile() {
   const workspace = useWorkspace();
-  const { tweets, loading, hasMore, loadMore, prefetch, deleteTweet } =
-    useTweets();
+  // const { tweets, loading, hasMore, loadMore, prefetch, deleteTweet } = useTweets();
+  const { postPdaAccountList } = useNftAccount();
 
-  useEffect(() => {
-    if (workspace) {
-      const filters = [userFilter(workspace.wallet.publicKey.toBase58())];
-      prefetch(filters);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [workspace]);
+  // useEffect(() => {
+  //   if (workspace) {
+  //     const filters = [userFilter(workspace.wallet.publicKey.toBase58())];
+  //     prefetch(filters);
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [workspace]);
 
   return (
     <Base>
@@ -30,13 +30,17 @@ export default function Profile() {
           </div>
           <TweetForm />
           {workspace ? (
-            <TweetList
-              tweets={tweets}
-              loading={loading}
-              hasMore={hasMore}
-              loadMore={loadMore}
-              deleteTweet={deleteTweet}
-            />
+            <div className="space-y-4">
+              {postPdaAccountList.map((tweet, index) => (
+                <UserTweetCard
+                  key={index}
+                  tweet={tweet}
+                  onDelete={() => {
+                    console.log("delete");
+                  }}
+                />
+              ))}
+            </div>
           ) : null}
         </div>
         <div className="relative mb-8 w-72"></div>
