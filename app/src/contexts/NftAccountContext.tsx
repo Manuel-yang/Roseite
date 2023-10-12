@@ -98,8 +98,7 @@ export function NftAccountProvidr({ children }: { children: ReactNode }) {
       setPostPdaAccountList(sortByTimestamp.reverse())
     }
   },[rawPostPdaAccountList])
-
-  console.log(postPdaAddressList)
+  console.log(postPdaAccountList)
 
   const value = useMemo(
     () => ({
