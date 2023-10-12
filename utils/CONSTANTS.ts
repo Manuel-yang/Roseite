@@ -20,11 +20,11 @@ export const CANDY_GUARD_PROGRAM_ID = new anchor.web3.PublicKey(
 )
 
 export const CANDY_MACHINE = new anchor.web3.PublicKey( // 需修改
-  "BACPCgFW5DaKn7BGFgCsBcpAkLATmBdBwQbtMPDMNu4W"
+  "3Vfn9z3g69zQ6Hk1wzwVLUjkUKabLztnEBuz5xqqwpes"
 )
 
 export const COLLECTION_ID = new anchor.web3.PublicKey( // 需修改
-  "FNyUPreSNxwdPRVMDHxUiSPkUh1VkT59dPFqf8CChzE7"
+  "JCiFrLVXJrvGeknVhGRip7iiTnFejDD8gjD3UkuwcMPw"
 )
 
 export const PROGRAM_ID = new anchor.web3.PublicKey(

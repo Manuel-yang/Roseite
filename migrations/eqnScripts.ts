@@ -80,7 +80,7 @@ async function getCandyMachineData(
   collectionAddress: PublicKey,
 ): Promise<CreateCandyMachineInput> {
   return {
-    symbol: 'NSM',
+    symbol: 'RSI',
     itemsAvailable: toBigNumber(2000000),
     authority: secretKey,
     sellerFeeBasisPoints: 500, // 创作者收益
@@ -89,9 +89,9 @@ async function getCandyMachineData(
     creators: [{ address: secretKey.publicKey, share: 100 }],
     itemSettings: {
       type: 'hidden',
-      hash: create32BitsHash('NSM'),
-      name: 'NSM #$ID+1$',
-      uri: 'https://shdw-drive.genesysgo.net/98CKHH7X9Y1vAhZ8a5o2NKFt7zWWtic5tSGLC5VE9Rhm/$ID+1$.json',//待替换 https:seedsnft.s3.ap-northeast-1.amazonaws.com/seedsnft/metadata/$ID+1$.json
+      hash: create32BitsHash('RSI'),
+      name: 'RSI #$ID+1$',
+      uri: 'https://shdw-drive.genesysgo.net/7vMHNrU6Q8yoijrNz4oDbqzCZtH7o8a3Nuq2fgj8K7Vk/$ID+1$.json',//待替换 https:seedsnft.s3.ap-northeast-1.amazonaws.com/seedsnft/metadata/$ID+1$.json
     },
     collection: {
       address: collectionAddress,
@@ -100,7 +100,7 @@ async function getCandyMachineData(
     groups: [
       {
         // only mint by seed platform
-        label: 'NSM',
+        label: 'RSI',
         guards: {
           addressGate: {
             address: new PublicKey(
@@ -120,9 +120,9 @@ async function getCandyMachineData(
 async function createCollection() {
   const { nft: collectNft } = await mx.nfts().create(
     {
-      name: 'NSM',
-      symbol: 'NSM',
-      uri: 'https://shdw-drive.genesysgo.net/98CKHH7X9Y1vAhZ8a5o2NKFt7zWWtic5tSGLC5VE9Rhm/image.jpg',
+      name: 'Roseite',
+      symbol: 'RSI',
+      uri: 'https://shdw-drive.genesysgo.net/7vMHNrU6Q8yoijrNz4oDbqzCZtH7o8a3Nuq2fgj8K7Vk/demoNft.png',
       sellerFeeBasisPoints: 500,
       isCollection: true,
       updateAuthority: secretKey,

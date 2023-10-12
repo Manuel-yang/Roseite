@@ -33,7 +33,7 @@ async function uplodateMetadata(id: String) {
 
   const fileBuff = fs.readFileSync(__dirname+'/template.json');
   const acctPubKey = new anchor.web3.PublicKey(
-      "98CKHH7X9Y1vAhZ8a5o2NKFt7zWWtic5tSGLC5VE9Rhm"
+      "7vMHNrU6Q8yoijrNz4oDbqzCZtH7o8a3Nuq2fgj8K7Vk"
   );
   const fileToUpload = {
       name: id+".json",
