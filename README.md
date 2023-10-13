@@ -60,6 +60,9 @@ It's worth noting that the core of this project lies in the implementation of th
 4. **Superior protocol:** Utilizing the design of NFT accounts,[Solana-6551 protocol](https://github.com/BTHDMS/solana6551) will enable the holding of multiple subsidiary NFTs under primary NFTs. Ownership changes in the parent NFT will reflect in the child NFTs, but child NFTs can also be transferred independently.
 5. **Improved content filtration mechanism:** Leveraging Solana's unique modeling mechanism, we aim to promote high-quality content and minimize irrelevant posts by regulating post PDA rents, ensuring a healthy balance within Roseite.
 
+# Solana-6551 protocol(tentative)
+![Solana-6551](./images/Solana-6551.png)
+
 # SocialFi
 
 ## Structure
