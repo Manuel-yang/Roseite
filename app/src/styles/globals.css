@@ -42,7 +42,22 @@
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    border-radius: 1rem;
+  }
+
+  .card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 20px;
+    padding: 2px;
+    background: linear-gradient(to right, #9945ff, #14f195);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
+
+  .card-content {
+    z-index: 1;
   }
 
   .toast-message {
@@ -54,11 +69,7 @@
     -webkit-backdrop-filter: blur(40px);
     backdrop-filter: blur(40px);
     background-color: transparent;
-    background-image: linear-gradient(
-        135deg,
-        rgb(128 128 128 / 50%) 0%,
-        rgb(0 0 0 / 5%) 100%
-      ),
+    background-image: linear-gradient(135deg, rgb(128 128 128 / 50%) 0%, rgb(0 0 0 / 5%) 100%),
       linear-gradient(100deg, rgb(128 128 128 / 50%) 25%, rgb(0 0 0 / 5%) 25%);
     box-shadow: 0 0 0 1px rgb(128 128 128 / 50%) inset, 0 0 0 2px #0000000d;
     text-shadow: 0 1px rgb(0 0 0 / 5%);
@@ -85,9 +96,8 @@
 
   .swap-rotate .swap-on {
     --tw-rotate: 45deg;
-    transform: translate(var(--tw-translate-x), var(--tw-translate-y))
-      rotate(var(--tw-rotate)) skew(var(--tw-skew-x)) skewY(var(--tw-skew-y))
-      scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skew(var(--tw-skew-x))
+      skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   }
 
   .swap .swap-on {
@@ -100,16 +110,14 @@
 
   .swap-rotate.swap-active .swap-on {
     --tw-rotate: 0deg;
-    transform: translate(var(--tw-translate-x), var(--tw-translate-y))
-      rotate(var(--tw-rotate)) skew(var(--tw-skew-x)) skewY(var(--tw-skew-y))
-      scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skew(var(--tw-skew-x))
+      skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   }
 
   .swap-rotate.swap-active .swap-off {
     --tw-rotate: -45deg;
-    transform: translate(var(--tw-translate-x), var(--tw-translate-y))
-      rotate(var(--tw-rotate)) skew(var(--tw-skew-x)) skewY(var(--tw-skew-y))
-      scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skew(var(--tw-skew-x))
+      skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   }
 
   .swap.swap-active .swap-off {

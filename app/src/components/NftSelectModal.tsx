@@ -1,7 +1,8 @@
+import { useState } from "react";
 import { Button, Modal } from "flowbite-react";
+import useTheme from "../hooks/useTheme";
 import Loader from "../components/Loader";
 import { nftInfo } from "../contexts/NftScannerContext";
-import { useState } from "react";
 
 interface NftSelectModalProps {
   isShow: boolean;
@@ -13,6 +14,7 @@ interface NftSelectModalProps {
 
 export default function NftSelectModal({ isShow, loading, nfts, close, confirm }: NftSelectModalProps) {
   const [selectingId, setSelectingId] = useState<number>();
+  const { theme } = useTheme();
 
   return (
     <Modal show={isShow} onClose={close}>
@@ -36,7 +38,7 @@ export default function NftSelectModal({ isShow, loading, nfts, close, confirm }
                       setSelectingId(index);
                     }}
                   />
-                  <p className="text-sm">{nft.data.name}</p>
+                  <span className={`text-sm ${theme === "dark" ? "text-white" : ""}`}>{nft.data.name}</span>
                 </div>
               ))
             )}
@@ -46,7 +48,7 @@ export default function NftSelectModal({ isShow, loading, nfts, close, confirm }
       <Modal.Footer>
         {selectingId !== undefined ? (
           <>
-            <div className="w-1/2">
+            <div className={`w-1/2 ${theme === "dark" ? "text-white" : ""}`}>
               <p>Select NFT: {nfts[selectingId]?.data.name}</p>
             </div>
             <div className="w-1/2">
