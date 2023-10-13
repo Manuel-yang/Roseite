@@ -1,15 +1,15 @@
 {
-    "name": "NSM",
-    "symbol": "NSM",
-    "description": "Nft social Media",
+    "name": "Roseite",
+    "symbol": "RSI",
+    "description": "Roseite socialFi Nft account",
     "seller_fee_basis_points": 500,
-    "image": "https://shdw-drive.genesysgo.net/98CKHH7X9Y1vAhZ8a5o2NKFt7zWWtic5tSGLC5VE9Rhm/nft.jpg",
+    "image": "https://shdw-drive.genesysgo.net/7vMHNrU6Q8yoijrNz4oDbqzCZtH7o8a3Nuq2fgj8K7Vk/demoNft.png",
     "properties":
     {
         "files":
         [
             {
-                "uri": "https://shdw-drive.genesysgo.net/98CKHH7X9Y1vAhZ8a5o2NKFt7zWWtic5tSGLC5VE9Rhm/nft.jpg",
+                "uri": "https://shdw-drive.genesysgo.net/7vMHNrU6Q8yoijrNz4oDbqzCZtH7o8a3Nuq2fgj8K7Vk/demoNft.png",
                 "type": "image/jpg"
             }
         ],

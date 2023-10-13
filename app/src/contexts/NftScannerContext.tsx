@@ -46,7 +46,7 @@ export function NftScannerProvider({ children }: { children: ReactNode }) {
         connection: workspace.connection,
       }).then((nfts) => {
         nfts.map((nft) => {
-          if (nft.data.symbol == "NSM") {
+          if (nft.data.symbol == "RSI") {
             getNftMetadata(nft).then((metadata) => {
               let tempNft = nft as nftInfo;
               tempNft.data.metadata = metadata;

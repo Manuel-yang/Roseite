@@ -113,7 +113,7 @@ pub fn cpi_mint<'info>(ctx: &Context<MintNft>) -> Result<()> {
     let binding = &[&program_pda_seed[..]];
     let cpi = ctx.accounts.set_data_ctx().with_signer(binding);
 
-    mpl_candy_guard::cpi::mint_v2(cpi, vec![0], Some("NSM".to_string()))?;
+    mpl_candy_guard::cpi::mint_v2(cpi, vec![0], Some("RSI".to_string()))?;
     Ok(())
 }
 

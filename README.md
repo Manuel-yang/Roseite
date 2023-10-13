@@ -23,6 +23,7 @@
 
 - [Introduce](#introduce)
   - [Advantages](#advantages)
+- [Solana-6551 protocol(tentative)](#solana-6551-protocol)
 - [SocialFi](#socialfi)
   - [Structure](#structure)
   - [Main Features](#main-features)
@@ -59,6 +60,12 @@ It's worth noting that the core of this project lies in the implementation of th
 3. **Enhanced value of NFTs:** The value of NFTs will be determined by NFT holders who attract followers through engaging content and generate profitable posts, thus increasing traffic to their NFT accounts. Additionally, these NFTs can be listed for sale on mainstream NFT marketplaces like Magic Edgn.
 4. **Superior protocol:** Utilizing the design of NFT accounts,[Solana-6551 protocol](https://github.com/BTHDMS/solana6551) will enable the holding of multiple subsidiary NFTs under primary NFTs. Ownership changes in the parent NFT will reflect in the child NFTs, but child NFTs can also be transferred independently.
 5. **Improved content filtration mechanism:** Leveraging Solana's unique modeling mechanism, we aim to promote high-quality content and minimize irrelevant posts by regulating post PDA rents, ensuring a healthy balance within Roseite.
+
+# Solana-6551 protocol
+It's worth noting that the [Solana-6551 protocol](https://github.com/BTHDMS/solana6551) and account NFTization are the core of this project. SocialFi is just an interesting experiment with this concept. In the future, we hope to come up with some gameplay that subverts the existing NFT and GameFi mechanisms, enhancing user fun and experience while pushing further towards decentralization.
+
+The following image outlines the fundamental model structure of Solana-6551(tentative). Visit [Solana-6551 protocol](https://github.com/BTHDMS/solana6551) for detailed information.
+![Solana-6551](./images/Solana-6551.png)
 
 # SocialFi
 
