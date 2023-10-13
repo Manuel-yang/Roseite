@@ -20,7 +20,7 @@ export default function CopyToClipboardButton({ textToCopy }: { textToCopy: stri
   return (
     <button
       onClick={handleCopyClick}
-      className={`font-bold py-1 px-1 rounded ${theme === "dark" ? "bg-gray-400" : "border border-black"}`}
+      className={`font-bold py-1 px-1 rounded ${theme === "dark" ? "bg-yellow-200" : "border border-black"}`}
     >
       {!copied ? (
         <svg
