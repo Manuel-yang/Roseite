@@ -29,6 +29,15 @@ const CommentModal: React.FC<ModalProps> = ({ tweet, isOpen, comments, setCommen
     }
   }, [isOpen]);
 
+  useEffect(() => {
+    const cardContent = document.querySelector(".card-content");
+    if (isOpen && cardContent) {
+      cardContent.style.setProperty("z-index", "auto");
+    } else {
+      cardContent.style.setProperty("z-index", "1");
+    }
+  }, [isOpen]);
+
   const handleCommentChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setComment(event.target.value);
   };
@@ -45,7 +54,7 @@ const CommentModal: React.FC<ModalProps> = ({ tweet, isOpen, comments, setCommen
   }
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-50 h-auto">
+    <div className="fixed inset-0 flex items-center justify-center z-50">
       <div className={`bg-white w-5/12 p-6 rounded-xl shadow ${theme === "dark" ? "bg-black" : "border"}`}>
         <button onClick={onClose}>
           <FaTimes color={`${theme === "dark" ? "white" : "black"}`} />
