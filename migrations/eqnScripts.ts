@@ -19,6 +19,7 @@ import {
 } from '@metaplex-foundation/js';
 import { create32BitsHash } from './hash';
 import bs58 from 'bs58';
+require('dotenv').config()
 
 // 网络类型
 const devNet =
@@ -28,24 +29,9 @@ const mainNew = 'https://api.mainnet-beta.solana.com';
 const mainNet =
   'https://solana-mainnet.g.alchemy.com/v2/BN2dE3kFa5zPU895iUA_o8YjlpsaUyay';
 
-/**
- * 导入私钥
- */
-// const decodedKey = new Uint8Array(
-//   JSON.parse(
-//     fs
-//       .readFileSync(
-//         __dirname +
-//           '/keypairs/eqnAdmin.json',
-//       )
-//       .toString(),
-//   ),
-// );
-// console.log(decodedKey)
-const privateKey = "5L9f87oHDmpGtBSBxoyrBYT6ok1P9axGFqr3UAFVuziktphS28JeudXQVTrY3tFLbcNbh3TvkjiUR3bKKMUN8hjd";//adm 私钥
+
+const privateKey = process.env.SECRET_KEY
 const decodedKey1 = bs58.decode(privateKey);
-// console.log(decodedKey1)
-const test = new Uint8Array([216,148,227,47,92,204,51,35,65,74,58,252,192,30,151,73,214,129,151,61,195,52,169,203,167,92,221,226,15,252,220,240,185,232,204,91,124,54,50,174,246,86,61,132,233,126,169,52,99,146,205,221,116,115,21,83,216,126,2,147,42,105,160,144])
 const secretKey = Keypair.fromSecretKey(decodedKey1);
 
 const connetionMainNet = new Connection(mainNew, 'finalized');

@@ -10,7 +10,12 @@ pub struct PostPda {
 
     pub like_num: u64,
 
-    pub time_stamp: i64
+    pub time_stamp: i64,
+
+    pub status: String,
+    // post
+    // delete
+    // update
 }
 
 impl PostPda {
@@ -20,8 +25,14 @@ impl PostPda {
             content,
             review_num,
             like_num,
-            time_stamp
+            time_stamp,
+            status: "post".to_string()
         }
+    }
+
+    pub fn update_post_pda_status(&mut self, status: String) -> Result<()> {
+        self.status = status;
+        Ok(())
     }
 
     pub fn increase_review_num(&mut self) -> Result<()> {

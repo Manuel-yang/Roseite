@@ -455,6 +455,10 @@ export type NftSocialMedia = {
           {
             "name": "timeStamp",
             "type": "i64"
+          },
+          {
+            "name": "status",
+            "type": "string"
           }
         ]
       }
@@ -1072,6 +1076,10 @@ export const IDL: NftSocialMedia = {
           {
             "name": "timeStamp",
             "type": "i64"
+          },
+          {
+            "name": "status",
+            "type": "string"
           }
         ]
       }
