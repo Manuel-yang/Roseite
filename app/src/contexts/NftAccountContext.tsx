@@ -21,6 +21,7 @@ export type postPdaAccount = {
   nftAddress: PublicKey;
   reviewNum: BN;
   timeStamp: BN;
+  status: string;
 };
 
 interface NftAccountState {
@@ -76,7 +77,9 @@ export function NftAccountProvidr({ children }: { children: ReactNode }) {
       // init data
       if (nftConfigPdaAccount.postsNum.toNumber() == postPdaAddressList.length) {
         postPdaAddressList.forEach((pdaAddress) => {
-          workspace.program.account.postPda.fetch(pdaAddress).then((postPdaAccount) => {
+          workspace.program.account.postPda
+          .fetch(pdaAddress)
+          .then((postPdaAccount) => {
             setRawPostPdaAccountList((prev) => [...prev, postPdaAccount]);
           });
         });
@@ -92,11 +95,15 @@ export function NftAccountProvidr({ children }: { children: ReactNode }) {
     }
   }, [postPdaAddressList]);
 
+  // list all the post which status is post by time
   useEffect(() => {
     if (workspace && rawPostPdaAccountList) {
       let sortByTimestamp = rawPostPdaAccountList.sort((x, y) => {
         return x.timeStamp.toNumber() - y.timeStamp.toNumber();
       });
+      sortByTimestamp = sortByTimestamp.filter((postPdaAccount) => {
+        return postPdaAccount.status == "post"
+      })
       setPostPdaAccountList(sortByTimestamp.reverse());
     }
   }, [rawPostPdaAccountList]);

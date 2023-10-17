@@ -365,7 +365,6 @@ import { Tweet } from "../../models";
 // });
 
 export const sendTweet = async (workspace: any, nftMintAddress: PublicKey, content: string) => {
-  // let mintKeypair = new PublicKey("Fkq1LTTWrCJpXSvdeAJBDUPXNUcx8v9Tm4Po65nr4dbt")
   if (workspace) {
     const program = workspace.program;
     const nftConfigPda = await getNftConfigPda(nftMintAddress);
