@@ -85,53 +85,6 @@ export function NftAccountProvidr({ children }: { children: ReactNode }) {
     fetchPostPdaAddressList()
   }, [workspace, nftConfigPdaAccount]);
 
-  // get content of post pda
-  useEffect(() => {
-    if (postPdaAddressList && workspace) {
-      // add new tweet after tweeting
-      if (nftConfigPdaAccount.postsNum.toNumber() == postPdaAddressList.length - 1) {
-        // console.log(rawPostPdaAccountList)
-        // workspace.program.account.postPda
-        //   .fetch(postPdaAddressList[postPdaAddressList.length - 1])
-        //   .then((postPdaAccount) => {
-        //     let tempPostPdaAccount = postPdaAccount as unknown as postPdaAccount
-        //     tempPostPdaAccount.postPdaAddress = postPdaAddressList[postPdaAddressList.length - 1]
-        //     setRawPostPdaAccountList((prev) => [...prev, tempPostPdaAccount]);
-        //     setNftConfigPdaAccount((prev) => ({
-        //       ...prev,
-        //       postsNum: new BN(prev.postsNum.toNumber()+1)
-        //     }))
-        //   });
-      }
-      // delete new tweet after tweeting
-      if (nftConfigPdaAccount.postsNum.toNumber() == postPdaAddressList.length + 1) {
-        // setPostPdaAddressList([])
-        // setRawPostPdaAccountList([])
-        // setPostPdaAccountList([])
-
-        // const fetchPostPdaAddressList = async () => {
-        //   if (nftConfigPdaAccount && workspace) {
-        //     const postsNum = nftConfigPdaAccount.postsNum.toNumber();
-        //     if (postsNum != postPdaAddressList.length) {
-        //       for (let i = 0; i < postsNum; i++) {
-        //         let res = await getPostPda(nftConfigPdaAccount!.nftMint, i)
-        //         setPostPdaAddressList((prev) => [...prev, res[0]]);
-        //         workspace.program.account.postPda
-        //         .fetch(res[0])
-        //         .then((postPdaAccount) => {
-        //           let tempPostPdaAccount = postPdaAccount as unknown as postPdaAccount
-        //           tempPostPdaAccount.postPdaAddress = res[0]
-        //           setRawPostPdaAccountList((prev) => [...prev, tempPostPdaAccount]);
-        //         });
-        //       }
-        //     }
-        //   }
-        // }
-        // fetchPostPdaAddressList()
-      }
-    }
-  }, [postPdaAddressList]);
-
   // // list all the post which status is post by time
   useEffect(() => {
     if (workspace && rawPostPdaAccountList) {
