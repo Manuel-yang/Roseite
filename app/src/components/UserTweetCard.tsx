@@ -58,7 +58,7 @@ export default function UserTweetCard({ tweet }: { tweet: UserTweet }) {
             </>
           )}
           <CopyToClipboardButton textToCopy={tweet.nftAddress.toString()} />
-          <UserTweetMenubar nftMintAddress={tweet.nftAddress} postPdaAddress={tweet.postPdaAddress}/>
+          <UserTweetMenubar nftMintAddress={tweet.nftAddress} postPdaAddress={tweet.postPdaAddress} postId={tweet.postId}/>
         </div>
 
         {/* Card Content */}

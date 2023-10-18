@@ -90,7 +90,7 @@ export function NftAccountProvidr({ children }: { children: ReactNode }) {
     if (postPdaAddressList && workspace) {
       // add new tweet after tweeting
       if (nftConfigPdaAccount.postsNum.toNumber() == postPdaAddressList.length - 1) {
-        console.log(rawPostPdaAccountList)
+        // console.log(rawPostPdaAccountList)
         // workspace.program.account.postPda
         //   .fetch(postPdaAddressList[postPdaAddressList.length - 1])
         //   .then((postPdaAccount) => {

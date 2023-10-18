@@ -6,6 +6,7 @@ import { sendTweet, deleteTweet } from "../pages/api/tweets";
 // import { deleteTweet, getTweet, paginateTweets, sendTweet, updateTweet } from "../pages/api/tweets";
 import useNftAccount from "../hooks/useNftAccount";
 import { postPdaAccount } from "./NftAccountContext";
+import BN from "bn.js";
 
 interface TweetsContextState {
   tweets: Tweet[];
@@ -16,7 +17,7 @@ interface TweetsContextState {
   loadMore(): void;
   sendTweet(tag: string, content: string): Promise<{ tweet: Tweet | null; message: string }>;
   // updateTweet(tweet: Tweet, tag: string, content: string): Promise<{ success: boolean; message: string }>;
-  deleteTweet(nftMintAddress: PublicKey, postPdaAddress: PublicKey): Promise<{ success: boolean; message: string }>;
+  deleteTweet(nftMintAddress: PublicKey, postPdaAddress: PublicKey, postId: BN): Promise<{ success: boolean; message: string }>;
   // getTweet(pubkey: PublicKey): Promise<Tweet | null>;
 }
 
@@ -97,20 +98,21 @@ export function TweetsProvider({ children }: { children: ReactNode }) {
   // );
 
   const _deleteTweet = useCallback(
-    async (nftMintAddress: PublicKey, postPdaAddress: PublicKey) => {
+    async (nftMintAddress: PublicKey, postPdaAddress: PublicKey, postId: BN) => {
       if (workspace) {
-        const result = await deleteTweet(workspace, nftMintAddress, postPdaAddress);
+        const result = await deleteTweet(workspace, nftMintAddress, postPdaAddress, postId);
         if (result.success) {
           setPostPdaAddressList(prev => prev.filter(element => element !== postPdaAddress))
           setRawPostPdaAccountList((prev) => prev.filter((element) => element.postPdaAddress !== postPdaAddress))
         }
         return result;
       } else {
-      return {
-        success: false,
-        message: "Connect wallet to delete tweet...",
-      };
+        return {
+          success: false,
+          message: "Connect wallet to delete tweet...",
+        };
       }
+ 
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [workspace, selectedNft, postPdaAddressList, rawPostPdaAccountList]

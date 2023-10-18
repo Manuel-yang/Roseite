@@ -24,13 +24,15 @@ export class UserTweet {
   reviewNum: BN;
   likeNum: BN;
   timeStamp: BN;
-  constructor(postPdaAddress: PublicKey, nftAddress: PublicKey, content: string, reviewNum: BN, likeNum: BN, timeStamp: BN) {
+  postId: BN;
+  constructor(postPdaAddress: PublicKey, nftAddress: PublicKey, content: string, reviewNum: BN, likeNum: BN, timeStamp: BN, postId: BN) {
     this.postPdaAddress = postPdaAddress
     this.nftAddress = nftAddress;
     this.content = content;
     this.reviewNum = reviewNum;
     this.likeNum = likeNum;
     this.timeStamp = timeStamp;
+    this.postId = postId;
   }
 }
 
