@@ -437,6 +437,10 @@
         "kind": "struct",
         "fields": [
           {
+            "name": "postId",
+            "type": "u64"
+          },
+          {
             "name": "nftAddress",
             "type": "publicKey"
           },
@@ -458,7 +462,7 @@
           },
           {
             "name": "status",
-            "type": "string"
+            "type": "u8"
           }
         ]
       }

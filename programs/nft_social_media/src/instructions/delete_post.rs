@@ -4,7 +4,7 @@ use anchor_lang::prelude::*;
 use anchor_spl::token::{Mint, TokenAccount};
 
 pub fn delete_post(ctx: Context<DeletePost>, _post_id: u64) -> Result<()> {
-    let _ = ctx.accounts.post_pda.update_post_pda_status("delete".to_string());
+    let _ = ctx.accounts.post_pda.update_post_pda_status(1);
     Ok(())
 }
 

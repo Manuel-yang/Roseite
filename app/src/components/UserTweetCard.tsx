@@ -7,8 +7,10 @@ import CopyToClipboardButton from "./CopyButton";
 import { bnToData, toLongCollapse } from "../utils";
 import CommentModal from "./CommentModal";
 import CommentExpandCard from "./CommentExpandCard";
+import UserTweetMenubar from "./UserTweetMenubar";
 
 export default function UserTweetCard({ tweet }: { tweet: UserTweet }) {
+  // console.log(tweet.postPdaAddress.toBase58())
   const { theme } = useTheme();
   const { nftsList, selectedNftId } = useNftScanner();
 
@@ -56,6 +58,7 @@ export default function UserTweetCard({ tweet }: { tweet: UserTweet }) {
             </>
           )}
           <CopyToClipboardButton textToCopy={tweet.nftAddress.toString()} />
+          <UserTweetMenubar nftMintAddress={tweet.nftAddress} postPdaAddress={tweet.postPdaAddress}/>
         </div>
 
         {/* Card Content */}

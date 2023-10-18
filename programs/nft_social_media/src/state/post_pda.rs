@@ -2,6 +2,9 @@ use crate::errors::ErrorCode;
 use anchor_lang::prelude::*;
 #[account]
 pub struct PostPda {
+    // pub post_pda_address: Pubkey,
+    pub post_id: u64,
+
     pub nft_address: Pubkey,
 
     pub content: String,
@@ -12,25 +15,26 @@ pub struct PostPda {
 
     pub time_stamp: i64,
 
-    pub status: String,
-    // post
-    // delete
-    // update
+    pub status: u8,
+    // 0 post
+    // 1 delete
+    // 2 update
 }
 
 impl PostPda {
-    pub fn init(nft_address: Pubkey, content: String, review_num: u64, like_num: u64, time_stamp: i64) -> Self {
+    pub fn init(post_id: u64, nft_address: Pubkey, content: String, review_num: u64, like_num: u64, time_stamp: i64) -> Self {
         Self {
+            post_id,
             nft_address,
             content,
             review_num,
             like_num,
             time_stamp,
-            status: "post".to_string()
+            status: 0
         }
     }
 
-    pub fn update_post_pda_status(&mut self, status: String) -> Result<()> {
+    pub fn update_post_pda_status(&mut self, status: u8) -> Result<()> {
         self.status = status;
         Ok(())
     }

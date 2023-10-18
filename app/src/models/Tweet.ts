@@ -18,12 +18,14 @@ export enum TweetState {
 }
 
 export class UserTweet {
+  postPdaAddress: PublicKey;
   nftAddress: PublicKey;
   content: string;
   reviewNum: BN;
   likeNum: BN;
   timeStamp: BN;
-  constructor(nftAddress: PublicKey, content: string, reviewNum: BN, likeNum: BN, timeStamp: BN) {
+  constructor(postPdaAddress: PublicKey, nftAddress: PublicKey, content: string, reviewNum: BN, likeNum: BN, timeStamp: BN) {
+    this.postPdaAddress = postPdaAddress
     this.nftAddress = nftAddress;
     this.content = content;
     this.reviewNum = reviewNum;

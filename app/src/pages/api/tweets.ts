@@ -14,6 +14,7 @@ import { getNftConfigPda, getPostPda, getAssociatedAddress } from "../../utils/p
 import useWorkspace, { Workspace } from "../../hooks/useWorkspace";
 import { Transaction } from "@solana/web3.js";
 import { Tweet } from "../../models";
+import { BN, workspace } from "@project-serum/anchor";
 
 // export const fetchTweets = async (program: Program, filters: any[] = []) => {
 //   const tweets = await program.account.tweet.all(filters);
@@ -392,3 +393,36 @@ export const sendTweet = async (workspace: any, nftMintAddress: PublicKey, conte
     }
   }
 };
+
+export const deleteTweet = async (workspace: any, nftMintAddress: PublicKey, postPdaAddress: PublicKey) => {
+  if (workspace) {
+    const program = workspace.program;
+    const nftConfigPda = await getNftConfigPda(nftMintAddress)
+    const postNum = await (await program.account.nftConfigPda.fetch(nftConfigPda[0])).postsNum
+    const tokenAddress = await getAssociatedAddress(nftMintAddress, workspace.wallet.publicKey)
+    try {
+      await program.methods.deletePost(new BN(Number(postNum)-1))
+      .accounts({
+        payer: workspace.wallet.publicKey,
+        nftConfigPda: nftConfigPda[0],
+        postPda: postPdaAddress,
+        nftMint: nftMintAddress,
+        nftToken: tokenAddress
+      })
+      .rpc()
+      return {
+        success: true,
+        message: "Your tweet was deleted successfully!",
+      };
+    }catch(error: any) {
+      return {
+        success: false,
+        message: error.toString(),
+      };
+    }
+  }
+  return {
+    success: false,
+    message: "workspace error",
+  };
+}
