@@ -366,6 +366,8 @@ import { BN, workspace } from "@project-serum/anchor";
 // });
 
 export const sendTweet = async (workspace: any, nftMintAddress: PublicKey, content: string) => {
+  const errorAccount = {user: nftMintAddress, timestamp: Date.now(), state: null, tag: "", content: content}
+  const errorTweet = new Tweet(nftMintAddress, errorAccount)
   if (workspace) {
     const program = workspace.program;
     const nftConfigPda = await getNftConfigPda(nftMintAddress);
@@ -386,12 +388,13 @@ export const sendTweet = async (workspace: any, nftMintAddress: PublicKey, conte
         
       const account = {user: nftMintAddress, timestamp: Date.now(), state: null, tag: "", content: content}
       const tweet = new Tweet(nftMintAddress, account)
-      return {postPdaAddress:postPda[0], tweet: tweet, message: "Your tweet was sent successfully!", };
+      return {postPdaAddress:postPda[0], tweet: tweet, message: "Your tweet was sent successfully!", success: true};
     } catch (error: any) {
-      console.log(error);
-      return error;
+
+      return {postPdaAddress:postPda[0], tweet: errorTweet, message: error.toString(), success: false};
     }
   }
+  return {postPdaAddress:null, tweet: errorTweet, message: "workspace error".toString(), success: false};
 };
 
 export const deleteTweet = async (workspace: any, nftMintAddress: PublicKey, postPdaAddress: PublicKey) => {

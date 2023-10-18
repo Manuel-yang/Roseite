@@ -33,7 +33,7 @@ interface NftAccountState {
   rawPostPdaAccountList: postPdaAccount[];
   postPdaAccountList: postPdaAccount[];
   setPostPdaAddressList: React.Dispatch<React.SetStateAction<PublicKey[]>>;
-  setRawPostPdaAccountList: (postPdaAddressList: postPdaAccount[]) => void;
+  setRawPostPdaAccountList: React.Dispatch<React.SetStateAction<postPdaAccount[]>>;
   setPostPdaAccountList: (postPdaAddressList: postPdaAccount[]) => void;
 }
 
@@ -88,48 +88,46 @@ export function NftAccountProvidr({ children }: { children: ReactNode }) {
   // get content of post pda
   useEffect(() => {
     if (postPdaAddressList && workspace) {
-      console.log(nftConfigPdaAccount.postsNum.toNumber())
-      console.log(postPdaAddressList.length)
       // add new tweet after tweeting
       if (nftConfigPdaAccount.postsNum.toNumber() == postPdaAddressList.length - 1) {
-        workspace.program.account.postPda
-          .fetch(postPdaAddressList[postPdaAddressList.length - 1])
-          .then((postPdaAccount) => {
-            let tempPostPdaAccount = postPdaAccount as unknown as postPdaAccount
-            tempPostPdaAccount.postPdaAddress = postPdaAddressList[postPdaAddressList.length - 1]
-            console.log(tempPostPdaAccount)
-            setRawPostPdaAccountList((prev) => [...prev, tempPostPdaAccount]);
-            setNftConfigPdaAccount((prev) => ({
-              ...prev,
-              postsNum: new BN(prev.postsNum.toNumber()+1)
-            }))
-          });
+        console.log(rawPostPdaAccountList)
+        // workspace.program.account.postPda
+        //   .fetch(postPdaAddressList[postPdaAddressList.length - 1])
+        //   .then((postPdaAccount) => {
+        //     let tempPostPdaAccount = postPdaAccount as unknown as postPdaAccount
+        //     tempPostPdaAccount.postPdaAddress = postPdaAddressList[postPdaAddressList.length - 1]
+        //     setRawPostPdaAccountList((prev) => [...prev, tempPostPdaAccount]);
+        //     setNftConfigPdaAccount((prev) => ({
+        //       ...prev,
+        //       postsNum: new BN(prev.postsNum.toNumber()+1)
+        //     }))
+        //   });
       }
       // delete new tweet after tweeting
       if (nftConfigPdaAccount.postsNum.toNumber() == postPdaAddressList.length + 1) {
-        setPostPdaAddressList([])
-        setRawPostPdaAccountList([])
-        setPostPdaAccountList([])
+        // setPostPdaAddressList([])
+        // setRawPostPdaAccountList([])
+        // setPostPdaAccountList([])
 
-        const fetchPostPdaAddressList = async () => {
-          if (nftConfigPdaAccount && workspace) {
-            const postsNum = nftConfigPdaAccount.postsNum.toNumber();
-            if (postsNum != postPdaAddressList.length) {
-              for (let i = 0; i < postsNum; i++) {
-                let res = await getPostPda(nftConfigPdaAccount!.nftMint, i)
-                setPostPdaAddressList((prev) => [...prev, res[0]]);
-                workspace.program.account.postPda
-                .fetch(res[0])
-                .then((postPdaAccount) => {
-                  let tempPostPdaAccount = postPdaAccount as unknown as postPdaAccount
-                  tempPostPdaAccount.postPdaAddress = res[0]
-                  setRawPostPdaAccountList((prev) => [...prev, tempPostPdaAccount]);
-                });
-              }
-            }
-          }
-        }
-        fetchPostPdaAddressList()
+        // const fetchPostPdaAddressList = async () => {
+        //   if (nftConfigPdaAccount && workspace) {
+        //     const postsNum = nftConfigPdaAccount.postsNum.toNumber();
+        //     if (postsNum != postPdaAddressList.length) {
+        //       for (let i = 0; i < postsNum; i++) {
+        //         let res = await getPostPda(nftConfigPdaAccount!.nftMint, i)
+        //         setPostPdaAddressList((prev) => [...prev, res[0]]);
+        //         workspace.program.account.postPda
+        //         .fetch(res[0])
+        //         .then((postPdaAccount) => {
+        //           let tempPostPdaAccount = postPdaAccount as unknown as postPdaAccount
+        //           tempPostPdaAccount.postPdaAddress = res[0]
+        //           setRawPostPdaAccountList((prev) => [...prev, tempPostPdaAccount]);
+        //         });
+        //       }
+        //     }
+        //   }
+        // }
+        // fetchPostPdaAddressList()
       }
     }
   }, [postPdaAddressList]);
