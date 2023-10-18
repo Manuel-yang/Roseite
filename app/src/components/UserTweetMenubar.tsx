@@ -21,12 +21,12 @@ import useTheme from '../hooks/useTheme';
     
     const deletePost = async () => {
       const toastId = notifyLoading("Transaction in progress. Please wait...", theme);
+      const result = await deleteTweet(nftMintAddress, postPdaAddress, postId)
+      notifyUpdate(toastId, result.message, result.success ? "success" : "error");
       jsConfetti.addConfetti({
         emojiSize: 20,
         confettiNumber: 120,
       });
-      const result = await deleteTweet(nftMintAddress, postPdaAddress, postId)
-      notifyUpdate(toastId, result.message, result.success ? "success" : "error");
     }
     return (
       <Menu menuButton={<MenuButton className="text-white text-lg">...</MenuButton>}>
