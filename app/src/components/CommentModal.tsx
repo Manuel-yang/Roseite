@@ -4,6 +4,10 @@ import { FaTimes } from "react-icons/fa";
 import useNftScanner from "../hooks/useNftScanner";
 import { toLongCollapse } from "../utils";
 import { UserTweet } from "../models";
+import { sendComment } from "../pages/api/comments";
+import useWorkspace from "../hooks/useWorkspace";
+import { Button } from "flowbite-react";
+import { AiOutlineLoading } from 'react-icons/ai';
 
 interface ModalProps {
   isOpen: boolean;
@@ -15,9 +19,11 @@ interface ModalProps {
 
 const CommentModal: React.FC<ModalProps> = ({ tweet, isOpen, comments, setComments, onClose }) => {
   const [comment, setComment] = useState("");
+  const [ isCommenting, setIsCommenting ] = useState(false)
   const { nftsList, selectedNftId } = useNftScanner();
   const { theme } = useTheme();
   const divRef = useRef<HTMLDivElement>(null);
+  const workspace = useWorkspace();
 
   useEffect(() => {
     if (divRef.current) {
@@ -42,11 +48,14 @@ const CommentModal: React.FC<ModalProps> = ({ tweet, isOpen, comments, setCommen
     setComment(event.target.value);
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const updatedComments = [comment, ...comments];
-    setComments(updatedComments);
-    onClose();
+    setIsCommenting(true)
+    let result = await sendComment(workspace, comment, tweet)
+    if (result) {
+      setIsCommenting(false)
+    }
+    // onClose();
   };
 
   if (!isOpen) {
@@ -92,9 +101,17 @@ const CommentModal: React.FC<ModalProps> = ({ tweet, isOpen, comments, setCommen
             ></textarea>
           </div>
           <div className="flex justify-end">
-            <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-xl">
-              Reply
-            </button>
+            <div className="flex flex-wrap items-center gap-2">
+              <Button
+                type="submit"
+                disabled={isCommenting}
+                isProcessing={isCommenting}
+                processingSpinner={<AiOutlineLoading className="h-6 w-6 animate-spin" />}
+                size="md"
+              >
+                {isCommenting ? (<p>Processing</p>) : (<p>Comment</p>)}
+              </Button>
+            </div>
           </div>
         </form>
       </div>
