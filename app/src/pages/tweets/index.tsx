@@ -60,7 +60,8 @@ export default function Tweets() {
                   ))}
                 </div>
               ))
-            : (<Spinner aria-label="Center-aligned spinner example" />)}
+            // : (<Spinner aria-label="Center-aligned spinner example" />)}
+            : null}
           </div>
         </div>
         <div className="relative mb-8 w-72">

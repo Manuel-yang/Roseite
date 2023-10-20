@@ -13,7 +13,7 @@ interface CommentsContextState {
   sendComment(
     content: string, 
     tweet: UserTweet
-  ): Promise<{ comment: Comment | null; message: string }>;
+  ): Promise<{ content: string, commentPdaAddress: PublicKey | null; message: string }>;
   // updateComment(
   //   commentKey: PublicKey,
   //   content: string

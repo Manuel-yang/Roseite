@@ -105,7 +105,13 @@ const CommentModal: React.FC<ModalProps> = ({ tweet, isOpen, comments, setCommen
     event.preventDefault();
     setIsCommenting(true)
     let result = await sendComment(comment, tweet)
-    if (result) {
+    if (result && workspace) {
+      const newCommentPdaAccount = await (await workspace.program.account.reviewPda.fetch(result.commentPdaAddress!)) as unknown as commentPdaAccount
+      newCommentPdaAccount.reviewPostPdaAddress = result.commentPdaAddress!
+      newCommentPdaAccount.postPdaAddress = tweet.postPdaAddress
+      setCommentPdaAddressList((prev) => [...prev, result.commentPdaAddress!])
+      setRawCommentPdaAccountList((prev) => [...prev, newCommentPdaAccount])
+      setComment("")
       setIsCommenting(false)
     }
     // onClose();

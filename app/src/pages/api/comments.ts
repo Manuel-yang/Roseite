@@ -1,7 +1,7 @@
 // import { Program, utils, web3 } from "@project-serum/anchor";
 // import { AnchorWallet } from "@solana/wallet-adapter-react";
 // import { PublicKey } from "@solana/web3.js";
-// import { Comment, CommentState } from "../../models/Comment";
+import { Comment } from "../../models/Comment";
 // import { sleep, toCollapse } from "../../utils";
 // import { AliasProps, getUserAlias } from "./alias";
 
@@ -137,21 +137,24 @@ export const sendComment = async (workspace: any, content: string, tweet: UserTw
   try {
     const program = workspace.program
     const reviewNum = await (await program.account.postPda.fetch(tweet.postPdaAddress)).reviewNum
-    const postReviewPda = await getPostCommentPda(tweet.postPdaAddress, reviewNum)
+    const postCommentPda = await getPostCommentPda(tweet.postPdaAddress, reviewNum)
     const tokenAddress = await getAssociatedAddress(tweet.nftAddress, workspace.wallet.publicKey)
  
     await program.methods.createPostReview(content)
       .accounts({
         payer: workspace.wallet.publicKey,
         postPda: tweet.postPdaAddress,
-        reviewPda: postReviewPda[0],
+        reviewPda: postCommentPda[0],
         nftMint: tweet.nftAddress,
         nftToken: tokenAddress
       })
       .rpc()
-      const res = await (await program.account.reviewPda.fetch(postReviewPda[0]))
-      console.log(res)
-      return res
+      // const res = await (await program.account.reviewPda.fetch(postCommentPda[0]))
+    return {
+      content: content,
+      commentPdaAddress: postCommentPda[0],
+      message: "Your comment was sent successfully!",
+    };
     }catch(error: any) {
       console.log(error)
     }
