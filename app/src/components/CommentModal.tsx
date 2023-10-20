@@ -143,7 +143,7 @@ const CommentModal: React.FC<ModalProps> = ({ tweet, isOpen, comments, setCommen
           )}
         </div>
         <div className="flex" ref={divRef}>
-          <div className="bg-gray-500 w-0.5 ml-4"></div>
+          <div className="bg-[#14F195] w-0.5 ml-4"></div>
           <p className={`text-md mb-4 ml-10 ${theme === "dark" ? "text-white" : ""}`}>{tweet.content}</p>
         </div>
         {/* comment block */}
@@ -165,7 +165,7 @@ const CommentModal: React.FC<ModalProps> = ({ tweet, isOpen, comments, setCommen
                   )}
                 </div>
                 <div className="flex" ref={divRef}>
-                  <div className="bg-gray-500 w-0.5 ml-4"></div>
+                  <div className="bg-[#14F195] w-0.5 ml-4"></div>
                   <p className={`text-md mb-4 ml-10 ${theme === "dark" ? "text-white" : ""}`}>{commentPdaAccount.content}</p>
                 </div>
               </>
@@ -174,14 +174,10 @@ const CommentModal: React.FC<ModalProps> = ({ tweet, isOpen, comments, setCommen
         )
         : null}
         <form onSubmit={handleSubmit}>
-          <div className="flex">
-            {selectedNftId !== undefined ? (
-              <img className="w-10 h-11 rounded-full mr-4 mt-4" src={nftsList[selectedNftId]?.data.metadata.image} />
-            ) : (
-              <img className="w-10 rounded-full" src={`https://avatars.dicebear.com/api/jdenticon/undefined.svg`} />
-            )}
+          <div className="flex mt-5">
+ 
             <textarea
-              className="w-full h-32 p-2 rounded my-4 text-white"
+              className="w-full h-32 p-2 rounded my-4 text-white bg-[#181823]"
               placeholder="Post Your Reply"
               value={comment}
               onChange={handleCommentChange}

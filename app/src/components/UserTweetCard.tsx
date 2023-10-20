@@ -49,7 +49,7 @@ export default function UserTweetCard({ tweet }: { tweet: UserTweet }) {
           <div className="col-start-1 col-end-1">
             <div className="flex items-center mb-4 mt-3">
               {selectedNftId !== undefined ? (
-                <img className="w-10 h-11 rounded-full mr-4" src={nftsList[selectedNftId]?.data.metadata.image} />
+                <img className="w-10 h-10 rounded-full mr-4" src={nftsList[selectedNftId]?.data.metadata.image} />
               ) : (
                 <img className="w-10 rounded-full" src={`https://avatars.dicebear.com/api/jdenticon/undefined.svg`} />
               )}
