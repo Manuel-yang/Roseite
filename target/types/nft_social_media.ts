@@ -530,6 +530,10 @@ export type NftSocialMedia = {
         "kind": "struct",
         "fields": [
           {
+            "name": "nftMintAddress",
+            "type": "publicKey"
+          },
+          {
             "name": "reviewId",
             "type": "u64"
           },
@@ -1231,6 +1235,10 @@ export const IDL: NftSocialMedia = {
       "type": {
         "kind": "struct",
         "fields": [
+          {
+            "name": "nftMintAddress",
+            "type": "publicKey"
+          },
           {
             "name": "reviewId",
             "type": "u64"

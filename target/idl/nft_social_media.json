@@ -530,6 +530,10 @@
         "kind": "struct",
         "fields": [
           {
+            "name": "nftMintAddress",
+            "type": "publicKey"
+          },
+          {
             "name": "reviewId",
             "type": "u64"
           },

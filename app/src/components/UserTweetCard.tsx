@@ -119,7 +119,7 @@ export default function UserTweetCard({ tweet }: { tweet: UserTweet }) {
               onClose={handleCommentOpen}
             />
             <FaRegComment className="text-gray-500 mr-1" color={commentColor} />
-            <span className="text-gray-500 mr-1">{comments.length} </span>
+            <span className="text-gray-500 mr-1">{tweet.reviewNum.toNumber()} </span>
             <span
               className="text-gray-500 cursor-pointer hover:underline"
               onMouseEnter={changeCommentColor}

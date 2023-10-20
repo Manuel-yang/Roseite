@@ -21,6 +21,7 @@ interface ModalProps {
 }
 
 export type commentPdaAccount = {
+  nftMintAddress: PublicKey,
   postPdaAddress: PublicKey,
   reviewId: BN,
   content: string;
@@ -113,6 +114,7 @@ const CommentModal: React.FC<ModalProps> = ({ tweet, isOpen, comments, setCommen
   if (!isOpen) {
     return null;
   }
+  console.log(commentPdaAccountList)
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50">
@@ -140,7 +142,7 @@ const CommentModal: React.FC<ModalProps> = ({ tweet, isOpen, comments, setCommen
         </div>
         {/* comment block */}
         {commentPdaAccountList !== undefined ? (
-          commentPdaAccountList.map((commentPdaAccount, index) => {
+          commentPdaAccountList.map((commentPdaAccount) => {
             return(
               <>
                 <div className="flex items-center mb-4 mt-4">
@@ -152,7 +154,7 @@ const CommentModal: React.FC<ModalProps> = ({ tweet, isOpen, comments, setCommen
                   {selectedNftId !== undefined && (
                     <>
                       <span className="font-medium text-gray-500 mr-4">{`${nftsList[selectedNftId]?.data.name}`} </span>
-                      <span className="text-gray-500 mr-3">{`@${toLongCollapse(commentPdaAccount.postPdaAddress)}`}</span>
+                      <span className="text-gray-500 mr-3">{`@${toLongCollapse(commentPdaAccount.nftMintAddress)}`}</span>
                     </>
                   )}
                 </div>

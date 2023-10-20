@@ -3,6 +3,8 @@ use anchor_lang::prelude::*;
 #[account]
 pub struct ReviewPda {
     // pub post_pda_address: Pubkey,
+    pub nft_mint_address: Pubkey,
+
     pub review_id: u64,
 
     pub reviewed_post_pda_address: Pubkey,
@@ -22,8 +24,9 @@ pub struct ReviewPda {
 }
 
 impl ReviewPda {
-    pub fn init(review_id: u64, reviewed_post_pda_address: Pubkey, content: String, review_num: u64, like_num: u64, time_stamp: i64) -> Self {
+    pub fn init(nft_mint_address:Pubkey, review_id: u64, reviewed_post_pda_address: Pubkey, content: String, review_num: u64, like_num: u64, time_stamp: i64) -> Self {
         Self {
+            nft_mint_address,
             review_id,
             reviewed_post_pda_address,
             content,

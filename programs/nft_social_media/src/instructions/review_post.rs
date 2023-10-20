@@ -6,7 +6,7 @@ use anchor_spl::token::{Mint, TokenAccount};
 pub fn create_review_post(ctx: Context<CreateReviewPost>, content: String) -> Result<()> {
     let review_pda = &mut ctx.accounts.review_pda;
     let now_ts = Clock::get().unwrap().unix_timestamp;
-    **review_pda = ReviewPda::init(ctx.accounts.post_pda.review_num, ctx.accounts.post_pda.key(),content,0,0,now_ts);
+    **review_pda = ReviewPda::init(ctx.accounts.nft_mint.key(),ctx.accounts.post_pda.review_num, ctx.accounts.post_pda.key(),content,0,0,now_ts);
     let _ = ctx.accounts.post_pda.increase_review_num();
     Ok(())
 }
