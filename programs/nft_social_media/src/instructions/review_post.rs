@@ -16,6 +16,7 @@ pub struct CreateReviewPost<'info> {
     #[account(mut)]
     payer: Signer<'info>,
 
+    #[account(mut)]
     pub post_pda: Account<'info, PostPda>,
 
     #[account(

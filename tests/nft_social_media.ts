@@ -184,33 +184,33 @@ describe("nft_social_media", () => {
     // await editeMetadata(uri)
   })
 
-  it("create a post", async () => {
-    let mintKeypair = new PublicKey("5caBby2A6cHmAuHLMeNAH5oM2B2rLhE8kvaD8YADUzwe")
-    const nftConfigPda = await getNftConfigPda(mintKeypair)
-    const postNum = await (await program.account.nftConfigPda.fetch(nftConfigPda[0])).postsNum
-    const postPda = await getPostPda(mintKeypair, postNum)
-    const tokenAddress = await getAssociatedAddress(mintKeypair, adminWallet.publicKey)
-    try {
-      let tx = await program.methods.createPost("So, what is this for? Put it on your website as placeholder text. Print it out as a speech for your next affirmation circle and see if anyone can guess a computer wrote it. Use it to write the hottest new bestseller in the self-help section, or generate marketing copy for a new line of cheesecloth tunics or zero-point energy wands!So, what is this for? Put it on your website as placeholder text. Print it out as a speech for your next affirmation circle and see if anyone can guess a computer wrote it. Use it to write the hottest new bestseller in the self-help section, or generate marketing copy for a new line of cheesecloth tunics or zero-point energy wands!  or generate marketing copy for a new line of cheesecloth tunics or zero-point energy wands!")
-      .accounts({
-        payer: adminWallet.publicKey,
-        nftConfigPda: nftConfigPda[0],
-        postPda: postPda[0],
-        nftMint: mintKeypair,
-        nftToken: tokenAddress
-      })
-      .signers([adminWallet])
-      .rpc()
-      const res = await (await program.account.postPda.fetch(postPda[0]))
-      console.log(res)
-    }catch(error: any) {
-      console.log(error)
-    }
+  // it("create a post", async () => {
+  //   let mintKeypair = new PublicKey("5caBby2A6cHmAuHLMeNAH5oM2B2rLhE8kvaD8YADUzwe")
+  //   const nftConfigPda = await getNftConfigPda(mintKeypair)
+  //   const postNum = await (await program.account.nftConfigPda.fetch(nftConfigPda[0])).postsNum
+  //   const postPda = await getPostPda(mintKeypair, postNum)
+  //   const tokenAddress = await getAssociatedAddress(mintKeypair, adminWallet.publicKey)
+  //   try {
+  //     let tx = await program.methods.createPost("So, what is this for? Put it on your website as placeholder text. Print it out as a speech for your next affirmation circle and see if anyone can guess a computer wrote it. Use it to write the hottest new bestseller in the self-help section, or generate marketing copy for a new line of cheesecloth tunics or zero-point energy wands!So, what is this for? Put it on your website as placeholder text. Print it out as a speech for your next affirmation circle and see if anyone can guess a computer wrote it. Use it to write the hottest new bestseller in the self-help section, or generate marketing copy for a new line of cheesecloth tunics or zero-point energy wands!  or generate marketing copy for a new line of cheesecloth tunics or zero-point energy wands!")
+  //     .accounts({
+  //       payer: adminWallet.publicKey,
+  //       nftConfigPda: nftConfigPda[0],
+  //       postPda: postPda[0],
+  //       nftMint: mintKeypair,
+  //       nftToken: tokenAddress
+  //     })
+  //     .signers([adminWallet])
+  //     .rpc()
+  //     const res = await (await program.account.postPda.fetch(postPda[0]))
+  //     console.log(res)
+  //   }catch(error: any) {
+  //     console.log(error)
+  //   }
 
-    console.log("postPda address:",postPda)
-    let res = await program.account.nftConfigPda.fetch(nftConfigPda[0])
-    console.log(res)
-  })
+  //   console.log("postPda address:",postPda)
+  //   let res = await program.account.nftConfigPda.fetch(nftConfigPda[0])
+  //   console.log(res)
+  // })
 
   // it("delete a post", async () => {
   //   let mintKeypair = new PublicKey("5caBby2A6cHmAuHLMeNAH5oM2B2rLhE8kvaD8YADUzwe")
@@ -261,14 +261,13 @@ describe("nft_social_media", () => {
       .signers([adminWallet])
       .rpc()
       const res = await (await program.account.reviewPda.fetch(postReviewPda[0]))
-      console.log(res)
+      return
     }catch(error: any) {
       console.log(error)
     }
 
 
 
-    // let res = await program.account.nftConfigPda.fetch(nftConfigPda[0])
-    // console.log(res)
+
   })
 });

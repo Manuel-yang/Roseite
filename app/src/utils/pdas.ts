@@ -126,7 +126,7 @@ export const getPostPda = async (
   return data
 }
 
-export const getPostReviewPda = async (
+export const getPostCommentPda = async (
   post_address: PublicKey,
   num: any
 ) => {

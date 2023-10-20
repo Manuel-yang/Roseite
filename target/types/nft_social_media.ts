@@ -395,7 +395,7 @@ export type NftSocialMedia = {
         },
         {
           "name": "postPda",
-          "isMut": false,
+          "isMut": true,
           "isSigner": false
         },
         {
@@ -1097,7 +1097,7 @@ export const IDL: NftSocialMedia = {
         },
         {
           "name": "postPda",
-          "isMut": false,
+          "isMut": true,
           "isSigner": false
         },
         {

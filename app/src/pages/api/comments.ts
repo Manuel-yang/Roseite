@@ -6,7 +6,7 @@
 // import { AliasProps, getUserAlias } from "./alias";
 
 import { PublicKey } from "@metaplex-foundation/js";
-import { getAssociatedAddress, getNftConfigPda, getPostPda, getPostReviewPda } from "../../utils/pdas";
+import { getAssociatedAddress, getNftConfigPda, getPostPda, getPostCommentPda } from "../../utils/pdas";
 import { BN } from "@project-serum/anchor";
 import { UserTweet } from "../../models";
 
@@ -137,7 +137,7 @@ export const sendComment = async (workspace: any, content: string, tweet: UserTw
   try {
     const program = workspace.program
     const reviewNum = await (await program.account.postPda.fetch(tweet.postPdaAddress)).reviewNum
-    const postReviewPda = await getPostReviewPda(tweet.postPdaAddress, reviewNum)
+    const postReviewPda = await getPostCommentPda(tweet.postPdaAddress, reviewNum)
     const tokenAddress = await getAssociatedAddress(tweet.nftAddress, workspace.wallet.publicKey)
  
     await program.methods.createPostReview(content)

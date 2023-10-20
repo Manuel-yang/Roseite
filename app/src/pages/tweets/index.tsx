@@ -51,7 +51,7 @@ export default function Tweets() {
             />
           ) : null}
           <TweetForm />
-          <div className="text-center">
+          <div >
             {initStatus && workspace 
             ? ((
                 <div className="space-y-4">
